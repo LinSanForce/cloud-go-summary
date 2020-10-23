@@ -1,0 +1,53 @@
+2020-05-08 10:18:39.167 [ERROR][8338] utils.go 223: [docker-machine-raw-error] Error creating machine: Error in driver during
+machine creation: Checking if hardware virtualization is enabled failed:
+open local/management-state/node/nodes/master1/machines/master1/master1/Logs/VBox.log: no such file or directory
+
+
+2020-05-08 10:18:39.167 [ERROR][8338] controller.go 308: read docker-machine output error, Error creating machine:
+Error in driver during machine creation: Checking if hardware virtualization is enabled failed:
+open local/management-state/node/nodes/master1/machines/master1/master1/Logs/VBox.log: no such file or directory
+
+
+
+2020-05-08 10:20:40.888 [INFO][8338] controller.go 297: Provisioning node node1
+
+
+2020-05-08 16:58:57.470 [ERROR][3082] generic_controller.go 290: ClusterAlertRuleController
+c-xd9xc/etcd-system-service [cluster-alert-rule-deployer] failed with : update cluster c-xd9xc failed,
+Operation cannot be fulfilled on clusters.management.cattle.io "c-xd9xc": the object has been modified;
+please apply your changes to the latest version and try again
+
+2020-05-08 16:58:57.473 [INFO][3082] prtb_handler.go 197: Creating clusterRoleBinding for project access
+to global resource for subject user-9mdsq role project-owner-promoted.
+
+2020-05-08 16:58:57.481 [ERROR][3082] generic_controller.go 290: ClusterAlertRuleController
+c-xd9xc/deployment-event-alert [cluster-alert-rule-deployer] failed with : update cluster c-xd9xc failed,
+Operation cannot be fulfilled on clusters.management.cattle.io "c-xd9xc": the object has been modified;
+please apply your changes to the latest version and try again
+
+
+2020-05-09 16:22:48.913 [INFO][20357] nodepool_store.go 41: hi ---------------------------- &
+{{}
+{NodePool management.cattle.io/v3}
+{np-fv8x8  c-xd9xc /apis/management.cattle.io/v3/namespaces/c-xd9xc/nodepools/np-fv8x8 fa80f2f6-91cb-11ea-8e74-00d861b77e2f 134906 3 2020-05-09 16:06:25 +0800 CST <nil> <nil> map[cattle.io/creator:norman] map[field.cattle.io/creatorId:user-9mdsq lifecycle.cattle.io/create.nodepool-provisioner:true] [] [controller.cattle.io/nodepool-provisioner]  []}
+{false false true cattle-global-nt:nt-szxc2 node2 1 map[] map[] []  c-xd9xc 0s}
+{[{Updated True 2020-05-09T16:06:25+08:00   }]}
+}
+
+
+
+
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: networks.samplecrd.k8s.io
+spec:
+  group: samplecrd.k8s.io
+  version: v1
+  names:
+    kind: Network
+    plural: networks
+  scope: Namespaced
+
+
+重构代码,合并了通用逻辑部分; 目前华为云, Ucloud功能已经完善; 阿里云驱动需要完全重构, 腾讯云驱动创建粒度不支持到"包年包月"

@@ -1,0 +1,16 @@
+# This file created by chart-manager
+# Created at 2020-03-12 15:02:41.471422184 +0000 UTC m=+169.371548436
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ template "project.fullName" . }}
+  name: {{ template "project.fullName" . }}
+spec:
+  ports:
+  - nodePort: {{ .Values.service.nodePort }}
+    port: {{ .Values.service.port }}
+    targetPort: {{ .Values.service.targetPort }}
+  selector:
+    app: {{ template "project.fullName" . }}
+  type: {{ .Values.service.type }}

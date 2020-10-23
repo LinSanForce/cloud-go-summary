@@ -1,0 +1,48 @@
+stages:
+  - name: Build
+    steps:
+      - runScriptConfig:
+          image: harbor.yzf.best:1180/library/maven:3.6-jdk-8-private-1.5
+          shellScript: mvn -U clean install -Dmaven.test.skip=true
+  - name: Publish power bam server
+    steps:
+      - publishImageConfig:
+          dockerfilePath: ./Dockerfile
+          buildContext: .
+          tag: 	architecture-group/power-bam-server:v9
+          pushRemote: true
+          registry: harbor.yzf.best:1180
+        env:
+          PLUGIN_DEBUG: "true"
+          PLUGIN_INSECURE: "true"
+        when:
+          branch: {}
+    when:
+      branch:
+        include:
+          - paas
+  - name: Publish chart
+    steps:
+      - publishCatalogConfig:
+          path: ./charts
+          catalogTemplate: daizhang
+          version: v1.0.0
+          gitUrl: http://gitlab.yzf.net/rancher/custom-charts
+          gitBranch: xzq
+          gitAuthor: powerpaas
+          gitEmail: powerpaas@yunzhangfang.com
+        env:
+          SUB_CHART: "true"
+        envFrom:
+          - sourceName: gitlab-secret
+            sourceKey: USERNAME
+            targetKey: USERNAME
+          - sourceName: gitlab-secret
+            sourceKey: PASSWORD
+            targetKey: PASSWORD
+  - name: sleep
+    steps:
+      - runScriptConfig:
+          image: harbor.yzf.best:1180/library/maven:3.6-jdk-8-private-1.5
+          shellScript: sleep 10
+notification: {}

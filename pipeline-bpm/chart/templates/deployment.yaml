@@ -1,0 +1,55 @@
+# This file created by chart-manager
+# Created at 2020-03-12 15:02:41.472361172 +0000 UTC m=+169.372487442
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ template "project.fullName" . }}
+  name: {{ template "project.fullName" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ template "project.fullName" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "project.fullName" . }}
+    spec:
+      volumes:
+      - name: logs
+        emptyDir: {}
+      - name: filebeat-conf
+        configMap:
+          name: filebeat-conf
+      containers:
+      - name: filebeat-sidecar
+        image: {{ .Values.filebeatSideCar.image }}:{{ .Values.filebeatSideCar.imageTag }}
+        volumeMounts:
+        - name: logs
+          mountPath: /data/{{ template "project.fullName" . }}/logs
+        - name: filebeat-conf
+          mountPath: /filebeat/conf
+      - env:
+        - name: apollo.bootstrap.enabled
+          value: '{{ .Values.container.env.apollo.bootstrap.enabled }}'
+        - name: apollo.bootstrap.namespaces
+          value: '{{ .Values.container.env.apollo.bootstrap.namespaces }}'
+        - name: apollo.cluster
+          value: '{{ .Values.container.env.apollo.cluster }}'
+        - name: apollo.meta
+          value: '{{ .Values.container.env.apollo.meta }}'
+        - name: app.id
+          value: '{{ .Values.container.env.app.id }}'
+        image: {{ .Values.container.image }}:{{ .Values.container.imageTag }}
+        imagePullPolicy: Always
+        name: {{ .Values.container.name }}
+        volumeMounts:
+        - name: logs
+          mountPath: /data/{{ template "project.fullName" . }}/logs
+        ports:
+        - containerPort: {{ .Values.container.port.containerPort }}
+          name: {{ .Values.container.port.name }}
+          protocol: {{ .Values.container.port.protocol }}
+      imagePullSecrets:
+      - name: {{ .Values.deployment.imagePullSecret.name }}

@@ -1,0 +1,112 @@
+ nodes:
+- nodeName: c-lxfzt:m-ghdvl
+  address: 192.168.100.115
+  port: "22"
+  internal_address: 192.168.100.115
+  role: [etcd, controlplane, worker]
+  hostname_override: master1
+  user: root
+  ssh_key: |
+    -----BEGIN RSA PRIVATE KEY-----
+    MIIEowIBAAKCAQEA5pbJO+Hxk7GZFJ+Sa3Mx4JX3UW7Qms7NFfOBKPQHIv6hqJMy
+    ldJaYnVIjUgzJesH3AEUpKEqrnfIsaC++saeOSVR0npdaA/7TOUnEqiX9kL8Lxj1
+    W0q6dG0TdteUuUqRVcls8XuYPpWtCQd/QrLdqCVz27FLarMbSOLedLMqxnyRME7i
+    2k1ifZ4+gb2HHjqQbvu+KAMYFGJ+ZOJCzITXN32vznW6ZFS5aB862HKgmOey4YKE
+    TeEe80nM7JVhcqfYkCCjJMiBDiPloh050zJKL9DhKGOIGy2tJS/XCwH9xjlgM4iz
+    yDXRwaxlKnzzUrCDPrjRHYkdin0SGiMsOD+zXQIDAQABAoIBAF/kWO80OPhIpPZ0
+    nbldgGJ7Owx8XvfiBFualh3nzYf6CFRIUoMHpVrIl1FZsxuTsAMH2APWmh9P5QAp
+    bwJu0qHFKU+0X1/FNaZ2rVcPEZLxrFoRsQcz/nIoYi3L3SdpISNhzpJl6ZwtNnZI
+    zd148MDaQmIcStamgTRAVG6Hi8Ragvk0eZBav6OnfT8pg6AYuKnw6nimfSANf9tt
+    orPuDRozzDR9QGGV2daAI5kApo74oPETvzk9GL84hVSbpKmQErUZ4jOQGjRdi5Ol
+    3ewGne7skva5Dp7tZHwRlYSzjME5tBr2PKj6Ucxotoo8echjhcvPX5lXKuLjFdMF
+    JVDy0wECgYEA+9Ic2qBMxG4nO0JAXgYMbNZnamUrs7aZiS+jqpKOT8UFVIOqnLLe
+    /lc82rtA0LiFyT1N+DZpCKhPWmAFM9/2GyVN2d33b5eHfS1Vj19g/CJ/H7f125MP
+    W05Nrm8fV9iw0h0oNZuEo7RY/HgMk2EMUd+9sk0+mHdPvF67XLxXl/0CgYEA6mp3
+    0NZDa9wcjGtA8XjZ1owlmOYE21pvZ5uAs8CYy30On7V8TLBBYQBfE9mZcOWYCV/H
+    glUVvcToaFGaVFYjrQZPvXJNz5z5jPvzvgwmbPp9pC1Edo8bVpQd09yOanGAnV+G
+    /UojxMRkkhfMyLmz1w2WhpA0PLqGbmqKWu7u9uECgYEA8T4Y5lkrMgNVEjAl+e1R
+    efLsn8DMXR5ReFtrL723GDRnJs/8YqH5fy+T3PgG3+3mPSO9zkxR0zlqy+mxEkE8
+    REU4j79VjFJeOk1z6iY1g1aI8poJrpDz5UTepn1OSZoNyzyjiLe0GiBsH3Himk4e
+    v1DZKjdWADpM6OjYFb9ZKwECgYA3o0uK6sAX4qd4AKDqb1es35iw4K94bM+SVMtI
+    XsclTSpiZ8332cG6xz7J1FTiAeyDFROicJV3dDwBPpUVvVg8YgodGfsz8rscZlSk
+    3/di2FVn2UKtrSu88ezeczPuOcBgGeNNTQKOWlrQfguh/MmdmmEG0UVEwLTVkj4C
+    dUGMoQKBgGsQiVjsIDgRqkENkoSC9YSh0HtIB1xgsDJUHm1QkawmIL8sY1kSVwUO
+    4wZC21MaZ5IxVOFNHujxnIOKIMEIiNbnz3ty50WqYZQHFLDmeZEDw+3C6qoLWLgc
+    gT4F7BDq/aAXI5dJYPZ5g5xyZ/JSdNLU6RcOk/dBpWk0/uBa7h8a
+    -----END RSA PRIVATE KEY-----
+  labels:
+    cattle.io/creator: norman
+services:
+  etcd:
+    extra_args:
+      election-timeout: "5000"
+      heartbeat-interval: "500"
+    snapshot: false
+    retention: 72h
+    creation: 12h
+    backup_config:
+      enabled: true
+      interval_hours: 12
+      retention: 6
+  kube-api:
+    service_node_port_range: 30000-32767
+network:
+  plugin: calico
+  options:
+    flannel_backend_type: vxlan
+authentication:
+  strategy: x509|webhook
+  sans: []
+  webhook: null
+system_images:
+  etcd: harbor.yzf.best:1180/rancher/coreos-etcd:v3.3.15-rancher1
+  alpine: harbor.yzf.best:1180/rancher/rke-tools:v0.1.51
+  nginx_proxy: harbor.yzf.best:1180/rancher/rke-tools:v0.1.51
+  cert_downloader: harbor.yzf.best:1180/rancher/rke-tools:v0.1.51
+  kubernetes_services_sidecar: harbor.yzf.best:1180/rancher/rke-tools:v0.1.51
+  kubedns: harbor.yzf.best:1180/rancher/k8s-dns-kube-dns:1.15.0
+  dnsmasq: harbor.yzf.best:1180/rancher/k8s-dns-dnsmasq-nanny:1.15.0
+  kubedns_sidecar: harbor.yzf.best:1180/rancher/k8s-dns-sidecar:1.15.0
+  kubedns_autoscaler: harbor.yzf.best:1180/rancher/cluster-proportional-autoscaler:1.7.1
+  coredns: harbor.yzf.best:1180/rancher/coredns-coredns:1.6.2
+  coredns_autoscaler: harbor.yzf.best:1180/rancher/cluster-proportional-autoscaler:1.7.1
+  kubernetes: harbor.yzf.best:1180/rancher/hyperkube:v1.16.3-rancher1
+  flannel: harbor.yzf.best:1180/rancher/coreos-flannel:v0.11.0-rancher1
+  flannel_cni: harbor.yzf.best:1180/rancher/flannel-cni:v0.3.0-rancher5
+  calico_node: harbor.yzf.best:1180/rancher/calico-node:v3.8.1
+  calico_cni: harbor.yzf.best:1180/rancher/calico-cni:v3.8.1
+  calico_controllers: harbor.yzf.best:1180/rancher/calico-kube-controllers:v3.8.1
+  calico_ctl: ""
+  calico_flexvol: harbor.yzf.best:1180/rancher/calico-pod2daemon-flexvol:v3.8.1
+  canal_node: harbor.yzf.best:1180/rancher/calico-node:v3.8.1
+  canal_cni: harbor.yzf.best:1180/rancher/calico-cni:v3.8.1
+  canal_flannel: harbor.yzf.best:1180/rancher/coreos-flannel:v0.11.0
+  canal_flexvol: harbor.yzf.best:1180/rancher/calico-pod2daemon-flexvol:v3.8.1
+  weave_node: harbor.yzf.best:1180/weaveworks/weave-kube:2.5.2
+  weave_cni: harbor.yzf.best:1180/weaveworks/weave-npc:2.5.2
+  pod_infra_container: harbor.yzf.best:1180/rancher/pause:3.1
+  ingress: harbor.yzf.best:1180/rancher/nginx-ingress-controller:nginx-0.25.1-rancher1
+  ingress_backend: harbor.yzf.best:1180/rancher/nginx-ingress-controller-defaultbackend:1.5-rancher1
+  metrics_server: harbor.yzf.best:1180/rancher/metrics-server:v0.3.4
+  windows_pod_infra_container: harbor.yzf.best:1180/rancher/kubelet-pause:v0.1.3
+ignore_docker_version: true
+kubernetes_version: v1.16.3-rancher1-1
+private_registries:
+- url: harbor.yzf.best:1180
+  user: dev
+  password: Dev123456
+  is_default: true
+ingress:
+  provider: nginx
+  options: {}
+  node_selector: {}
+  extra_args: {}
+  dns_policy: ""
+  extra_envs: []
+  extra_volumes: []
+  extra_volume_mounts: []
+addon_job_timeout: 30
+monitoring:
+  provider: metrics-server
+  options: {}
+  node_selector: {}

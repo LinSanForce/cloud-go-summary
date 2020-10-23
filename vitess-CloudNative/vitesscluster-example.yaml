@@ -1,0 +1,107 @@
+apiVersion: planetscale.com/v2
+kind: VitessCluster
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"planetscale.com/v2","kind":"VitessCluster","metadata":{"annotations":{},"name":"example","namespace":"vitess"},"spec":{"cells":[{"gateway":{"authentication":{"static":{"secret":{"key":"users.json","name":"example-cluster-config"}}},"replicas":1,"resources":{"limits":{"memory":"256Mi"},"requests":{"cpu":"100m","memory":"256Mi"}}},"name":"zone1"}],"images":{"mysqld":{"mysql56Compatible":"harbor.yzf.best:1180/vitess/lite:v6.0.20-20200429"},"mysqldExporter":"harbor.yzf.best:1180/vitess/mysqld-exporter:v0.11.0","vtbackup":"harbor.yzf.best:1180/vitess/lite:v6.0.20-20200429","vtctld":"harbor.yzf.best:1180/vitess/lite:v6.0.20-20200429","vtgate":"harbor.yzf.best:1180/vitess/lite:v6.0.20-20200429","vttablet":"harbor.yzf.best:1180/vitess/lite:v6.0.20-20200429"},"keyspaces":[{"name":"commerce","partitionings":[{"equal":{"parts":1,"shardTemplate":{"databaseInitScriptSecret":{"key":"init_db.sql","name":"example-cluster-config"},"replication":{"enforceSemiSync":false},"tabletPools":[{"cell":"zone1","dataVolumeClaimTemplate":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"10Gi"}}},"mysqld":{"resources":{"requests":{"cpu":"100m","memory":"256Mi"}}},"replicas":2,"type":"replica","vttablet":{"extraFlags":{"db_charset":"utf8mb4"},"resources":{"requests":{"cpu":"100m","memory":"256Mi"}}}}]}}}],"turndownPolicy":"Immediate"}],"updateStrategy":{"type":"Immediate"},"vitessDashboard":{"cells":["zone1"],"extraFlags":{"security_policy":"read-only"},"replicas":1,"resources":{"limits":{"memory":"128Mi"},"requests":{"cpu":"100m","memory":"128Mi"}}}}}
+  creationTimestamp: "2020-06-30T07:59:23Z"
+  generation: 1
+  name: example
+  namespace: vitess
+  resourceVersion: "22858648"
+  selfLink: /apis/planetscale.com/v2/namespaces/vitess/vitessclusters/example
+  uid: ab7f3562-5851-4611-8da3-a56758334c6a
+spec:
+  cells:
+  - gateway:
+      authentication:
+        static:
+          secret:
+            key: users.json
+            name: example-cluster-config
+      replicas: 1
+      resources:
+        limits:
+          memory: 256Mi
+        requests:
+          cpu: 100m
+          memory: 256Mi
+    name: zone1
+  images:
+    mysqld:
+      mysql56Compatible: harbor.yzf.best:1180/vitess/lite:v6.0.20-20200429
+    mysqldExporter: harbor.yzf.best:1180/vitess/mysqld-exporter:v0.11.0
+    vtbackup: harbor.yzf.best:1180/vitess/lite:v6.0.20-20200429
+    vtctld: harbor.yzf.best:1180/vitess/lite:v6.0.20-20200429
+    vtgate: harbor.yzf.best:1180/vitess/lite:v6.0.20-20200429
+    vttablet: harbor.yzf.best:1180/vitess/lite:v6.0.20-20200429
+  keyspaces:
+  - name: commerce
+    partitionings:
+    - equal:
+        parts: 1
+        shardTemplate:
+          databaseInitScriptSecret:
+            key: init_db.sql
+            name: example-cluster-config
+          replication:
+            enforceSemiSync: false
+          tabletPools:
+          - cell: zone1
+            dataVolumeClaimTemplate:
+              accessModes:
+              - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 10Gi
+            mysqld:
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 256Mi
+            replicas: 2
+            type: replica
+            vttablet:
+              extraFlags:
+                db_charset: utf8mb4
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 256Mi
+    turndownPolicy: Immediate
+  updateStrategy:
+    type: Immediate
+  vitessDashboard:
+    cells:
+    - zone1
+    extraFlags:
+      security_policy: read-only
+    replicas: 1
+    resources:
+      limits:
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+status:
+  cells:
+    zone1:
+      gatewayAvailable: "False"
+  gatewayServiceName: example-vtgate-ae7df4b6
+  globalLockserver:
+    etcd:
+      available: "False"
+  keyspaces:
+    commerce:
+      cells:
+      - zone1
+      desiredShards: 1
+      desiredTablets: 2
+      shards: 1
+      tablets: 2
+      updatedShards: 1
+      updatedTablets: 2
+  observedGeneration: 1
+  vitessDashboard:
+    available: "False"
+    serviceName: example-vtctld-625ee430

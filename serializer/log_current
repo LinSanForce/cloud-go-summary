@@ -1,0 +1,374 @@
+
+2020-07-16 15:32:29.884 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/kontainer-engine@v0.0.4-dev.0.20191231022711-2cbd0ce15d2f/drivers/rke/rke_driver.go 150: restore rke state
+2020-07-16 15:32:29.893 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/kontainer-engine@v0.0.4-dev.0.20191231022711-2cbd0ce15d2f/drivers/rke/rke_driver.go 169: bring  up the cluster.....
+2020-07-16 15:32:29.893 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/kontainer-engine@v0.0.4-dev.0.20191231022711-2cbd0ce15d2f/drivers/rke/rke_driver.go 519: initing the cluster (call rke).....
+2020-07-16 15:32:29.894 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: Initiating Kubernetes cluster
+
+2020-07-16 15:32:29.898 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/cluster/validation.go 21: validating version.....
+2020-07-16 15:32:29.898 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/cluster/validation.go 27: validating duplicate nodes.....
+2020-07-16 15:32:29.898 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/cluster/validation.go 33: validating host options.....
+2020-07-16 15:32:29.898 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/cluster/validation.go 39: validating auth options.....
+2020-07-16 15:32:29.898 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: InitClusterObject.....
+2020-07-16 15:32:29.898 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/cluster/validation.go 45: validating network options.....
+2020-07-16 15:32:29.898 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/cluster/validation.go 51: validating ingress options.....
+2020-07-16 15:32:29.898 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/cluster/validation.go 57: validating services options.....
+2020-07-16 15:32:29.901 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: init cluster object.....
+2020-07-16 15:32:29.911 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: getting localKubeConfigPath.....
+                                                                                                                    local/management-state/rke/rke-695961887/kube_config_cluster.yml
+2020-07-16 15:32:29.912 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/kontainer-engine@v0.0.4-dev.0.20191231022711-2cbd0ce15d2f/drivers/rke/rke_driver.go 525: bring up the cluster (call rke).....
+2020-07-16 15:32:29.914 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: getting stateFilePath.....
+                                                                                                                    local/management-state/rke/rke-695961887/cluster.rkestate
+
+2020-07-16 15:32:29.915 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/cluster/validation.go 21: validating version.....
+2020-07-16 15:32:29.915 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/cluster/validation.go 27: validating duplicate nodes.....
+2020-07-16 15:32:29.915 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/cluster/validation.go 33: validating host options.....
+2020-07-16 15:32:29.915 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/cluster/validation.go 39: validating auth options.....
+2020-07-16 15:32:29.915 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/cluster/validation.go 45: validating network options.....
+2020-07-16 15:32:29.915 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/cluster/validation.go 51: validating ingress options.....
+2020-07-16 15:32:29.915 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/cluster/validation.go 57: validating services options.....
+2020-07-16 15:32:29.925 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: setting cluster defaults.....
+2020-07-16 15:32:29.929 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: setting network options.....
+2020-07-16 15:32:29.937 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: setting cloud provider.....
+2020-07-16 15:32:29.940 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 237: Image [harbor.yzf.best:1180/rancher/rke-tools:v0.1.51] exists on host [192.168.100.125]
+2020-07-16 15:32:29.941 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: invert index hosts.....
+2020-07-16 15:32:29.949 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: validating cluster.....
+2020-07-16 15:32:29.958 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: checkLegacyCluster.....
+2020-07-16 15:32:29.967 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [certificates] Generating admin certificates and kubeconfig
+2020-07-16 15:32:29.978 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: Successfully Deployed state file at [local/management-state/rke/rke-695961887/cluster.rkestate]
+2020-07-16 15:32:29.995 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: rke cluster up.....
+2020-07-16 15:32:29.998 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: read cluster state file.....
+2020-07-16 15:32:30.006 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: call init cluster object.....
+2020-07-16 15:32:30.015 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: init cluster object.....
+2020-07-16 15:32:30.019 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 399: Starting container [rke-etcd-port-listener] on host [192.168.100.125], try #1
+2020-07-16 15:32:30.023 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: getting localKubeConfigPath.....
+                                        local/management-state/rke/rke-695961887/kube_config_cluster.yml
+2020-07-16 15:32:30.032 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: getting stateFilePath.....
+                                        local/management-state/rke/rke-695961887/cluster.rkestate
+2020-07-16 15:32:30.042 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: getting certificateDir.....
+                                        local/management-state/rke/rke-695961887/cluster_certs
+2020-07-16 15:32:30.050 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: setting cluster defaults.....
+2020-07-16 15:32:30.060 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: setting network options.....
+2020-07-16 15:32:30.068 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: setting cloud provider.....
+2020-07-16 15:32:30.077 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: invert index hosts.....
+2020-07-16 15:32:30.086 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: validating cluster.....
+2020-07-16 15:32:30.095 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: Building Kubernetes cluster
+
+2020-07-16 15:32:30.107 [WARNING][601] <nil> <nil>: Can't start Docker container [rke-etcd-port-listener] on host [192.168.100.125]: Error response from daemon: driver failed programming external connectivity on endpoint rke-etcd-port-listener
+            (cff6bde688b4c63079fd3cbb3951acd7eb05355426eacf70d14a7ffef1dfc4a0): Error starting userland proxy: listen tcp 0.0.0.0:2380: bind: address already in use
+
+2020-07-16 15:32:30.107 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 399: Starting container [rke-etcd-port-listener] on host [192.168.100.125], try #2
+2020-07-16 15:32:30.113 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: check remote host docker info.....
+2020-07-16 15:32:30.117 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: get unique host list from cluster info.....
+2020-07-16 15:32:30.123 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: tunnel up to host c-bblkn:m-lzvzv with [address: 192.168.100.125, internal address: 192.168.100.125].....
+2020-07-16 15:32:30.132 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [dialer] Setup tunnel for host [192.168.100.125]
+2020-07-16 15:32:30.141 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: get current cluster state.....
+2020-07-16 15:32:30.150 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: check the cluster ports.....
+2020-07-16 15:32:30.159 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [network] Deploying port listener containers
+
+2020-07-16 15:32:30.191 [WARNING][601] <nil> <nil>: Can't start Docker container [rke-etcd-port-listener] on host [192.168.100.125]: Error response from daemon: driver failed programming external connectivity on endpoint rke-etcd-port-listener (d85e302a713b645834d6ba8f03374a6b4201c7ddb155c5db5564cc69a1dfac8d): Error starting userland proxy: listen tcp 0.0.0.0:2380: bind: address already in use
+2020-07-16 15:32:30.191 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 399: Starting container [rke-etcd-port-listener] on host [192.168.100.125], try #3
+2020-07-16 15:32:30.273 [WARNING][601] <nil> <nil>: Can't start Docker container [rke-etcd-port-listener] on host [192.168.100.125]: Error response from daemon: driver failed programming external connectivity on endpoint rke-etcd-port-listener (a95b10b2ee49ec35b9a4f0467f559057bbe2fd8315a0c59477da92f3af1de35a): Error starting userland proxy: listen tcp 0.0.0.0:2380: bind: address already in use
+
+
+2020-07-16 15:32:30.277 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 237: Image [harbor.yzf.best:1180/rancher/rke-tools:v0.1.51] exists on host [192.168.100.125]
+2020-07-16 15:32:30.368 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 399: Starting container [rke-cp-port-listener] on host [192.168.100.125], try #1
+2020-07-16 15:32:30.473 [WARNING][601] <nil> <nil>: Can't start Docker container [rke-cp-port-listener] on host [192.168.100.125]: Error response from daemon: driver failed programming external connectivity on endpoint rke-cp-port-listener (0093a7e8cacdf51f3bf5e4d85e076b0ab8b66337548fd0b7b44d8d6f69557a51): Error starting userland proxy: listen tcp 0.0.0.0:6443: bind: address already in use
+2020-07-16 15:32:30.473 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 399: Starting container [rke-cp-port-listener] on host [192.168.100.125], try #2
+2020-07-16 15:32:30.593 [WARNING][601] <nil> <nil>: Can't start Docker container [rke-cp-port-listener] on host [192.168.100.125]: Error response from daemon: driver failed programming external connectivity on endpoint rke-cp-port-listener (e8cdeaa19040562aac3614431770a4daaf5a6f1da522730caa829174c4fabdb9): Error starting userland proxy: listen tcp 0.0.0.0:6443: bind: address already in use
+2020-07-16 15:32:30.594 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 399: Starting container [rke-cp-port-listener] on host [192.168.100.125], try #3
+2020-07-16 15:32:30.695 [WARNING][601] <nil> <nil>: Can't start Docker container [rke-cp-port-listener] on host [192.168.100.125]: Error response from daemon: driver failed programming external connectivity on endpoint rke-cp-port-listener (45a313c001024725578d4788536a7349f353fbb6eeb8564d156ab9c90d6d77a3): Error starting userland proxy: listen tcp 0.0.0.0:6443: bind: address already in use
+
+
+2020-07-16 15:32:30.697 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 237: Image [harbor.yzf.best:1180/rancher/rke-tools:v0.1.51] exists on host [192.168.100.125]
+2020-07-16 15:32:30.829 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 399: Starting container [rke-worker-port-listener] on host [192.168.100.125], try #1
+2020-07-16 15:32:31.204 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [network] Successfully started [rke-worker-port-listener] container on host [192.168.100.125]
+2020-07-16 15:32:31.208 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [network] Port listener containers deployed successfully
+2020-07-16 15:32:31.211 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [network] Running control plane -> etcd port checks
+2020-07-16 15:32:31.213 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 237: Image [harbor.yzf.best:1180/rancher/rke-tools:v0.1.51] exists on host [192.168.100.125]
+2020-07-16 15:32:31.295 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 399: Starting container [rke-port-checker] on host [192.168.100.125], try #1
+2020-07-16 15:32:31.469 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [network] Successfully started [rke-port-checker] container on host [192.168.100.125]
+2020-07-16 15:32:31.547 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 325: Removing container [rke-port-checker] on host [192.168.100.125], try #1
+2020-07-16 15:32:31.737 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [network] Running control plane -> worker port checks
+2020-07-16 15:32:31.746 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 237: Image [harbor.yzf.best:1180/rancher/rke-tools:v0.1.51] exists on host [192.168.100.125]
+2020-07-16 15:32:31.847 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 399: Starting container [rke-port-checker] on host [192.168.100.125], try #1
+2020-07-16 15:32:32.083 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [network] Successfully started [rke-port-checker] container on host [192.168.100.125]
+2020-07-16 15:32:32.201 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 325: Removing container [rke-port-checker] on host [192.168.100.125], try #1
+2020-07-16 15:32:32.245 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [network] Running workers -> control plane port checks
+2020-07-16 15:32:32.247 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 237: Image [harbor.yzf.best:1180/rancher/rke-tools:v0.1.51] exists on host [192.168.100.125]
+2020-07-16 15:32:32.355 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 399: Starting container [rke-port-checker] on host [192.168.100.125], try #1
+2020-07-16 15:32:32.529 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [network] Successfully started [rke-port-checker] container on host [192.168.100.125]
+2020-07-16 15:32:32.649 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 325: Removing container [rke-port-checker] on host [192.168.100.125], try #1
+2020-07-16 15:32:32.688 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [network] Skipping kubeapi port check
+2020-07-16 15:32:32.691 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 325: Removing container [rke-etcd-port-listener] on host [192.168.100.125], try #1
+2020-07-16 15:32:32.695 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [network] Removing port listener containers
+2020-07-16 15:32:32.706 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [remove/rke-etcd-port-listener] Successfully removed container on host [192.168.100.125]
+2020-07-16 15:32:32.708 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 325: Removing container [rke-cp-port-listener] on host [192.168.100.125], try #1
+2020-07-16 15:32:32.725 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [remove/rke-cp-port-listener] Successfully removed container on host [192.168.100.125]
+2020-07-16 15:32:32.727 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 325: Removing container [rke-worker-port-listener] on host [192.168.100.125], try #1
+2020-07-16 15:32:33.009 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [remove/rke-worker-port-listener] Successfully removed container on host [192.168.100.125]
+2020-07-16 15:32:33.011 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 204: Checking if container [cert-deployer] is running on host [192.168.100.125], try #1
+2020-07-16 15:32:33.030 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [network] Port listener containers removed successfully
+2020-07-16 15:32:33.038 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 237: Image [harbor.yzf.best:1180/rancher/rke-tools:v0.1.51] exists on host [192.168.100.125]
+2020-07-16 15:32:33.044 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: deploy certs to hosts.....
+2020-07-16 15:32:33.055 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [certificates] Deploying kubernetes certificates to Cluster nodes
+2020-07-16 15:32:33.074 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: deploy certs on plane host.....
+2020-07-16 15:32:33.142 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 399: Starting container [cert-deployer] on host [192.168.100.125], try #1
+2020-07-16 15:32:33.476 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 204: Checking if container [cert-deployer] is running on host [192.168.100.125], try #1
+2020-07-16 15:32:38.487 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 204: Checking if container [cert-deployer] is running on host [192.168.100.125], try #1
+2020-07-16 15:32:38.502 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 325: Removing container [cert-deployer] on host [192.168.100.125], try #1
+2020-07-16 15:32:38.531 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [certificates] build local admin config file.....
+2020-07-16 15:32:38.538 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [reconcile] Rebuilding and updating local kube config
+2020-07-16 15:32:38.543 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: Successfully Deployed local admin kubeconfig at [local/management-state/rke/rke-695961887/kube_config_cluster.yml]
+2020-07-16 15:32:38.558 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [certificates] Successfully deployed kubernetes certificates to Cluster nodes
+2020-07-16 15:32:38.561 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 237: Image [harbor.yzf.best:1180/rancher/rke-tools:v0.1.51] exists on host [192.168.100.125]
+2020-07-16 15:32:38.562 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [file-deploy] Deploying file [/etc/kubernetes/kube-api-authn-webhook.yaml] to node [192.168.100.125]
+2020-07-16 15:32:38.692 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 399: Starting container [file-deployer] on host [192.168.100.125], try #1
+2020-07-16 15:32:39.148 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: Successfully started [file-deployer] container on host [192.168.100.125]
+2020-07-16 15:32:39.153 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: Waiting for [file-deployer] container to exit on host [192.168.100.125]
+2020-07-16 15:32:39.157 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: Waiting for [file-deployer] container to exit on host [192.168.100.125]
+2020-07-16 15:32:39.157 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: Container [file-deployer] is still running on host [192.168.100.125]
+2020-07-16 15:32:40.150 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: Waiting for [file-deployer] container to exit on host [192.168.100.125]
+2020-07-16 15:32:40.168 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 325: Removing container [file-deployer] on host [192.168.100.125], try #1
+2020-07-16 15:32:40.179 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [remove/file-deployer] Successfully removed container on host [192.168.100.125]
+2020-07-16 15:32:40.181 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 237: Image [harbor.yzf.best:1180/rancher/hyperkube:v1.16.3-rancher1] exists on host [192.168.100.125]
+2020-07-16 15:32:40.183 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [/etc/kubernetes/kube-api-authn-webhook.yaml] Successfully deployed authentication webhook config Cluster nodes
+2020-07-16 15:32:40.190 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: reconcile the cluster.....
+2020-07-16 15:32:40.195 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [reconcile] Reconciling cluster state
+2020-07-16 15:32:40.196 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 237: Image [harbor.yzf.best:1180/rancher/rke-tools:v0.1.51] exists on host [192.168.100.125]
+2020-07-16 15:32:40.204 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [reconcile] This is newly generated cluster
+2020-07-16 15:32:40.212 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: pre pull k8s images [harbor.yzf.best:1180/rancher/hyperkube:v1.16.3-rancher1] .....
+2020-07-16 15:32:40.221 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: Pre-pulling kubernetes images
+2020-07-16 15:32:40.231 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: Kubernetes images pulled successfully
+2020-07-16 15:32:40.248 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: deploy control plane.....
+2020-07-16 15:32:40.263 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [etcd] Building up etcd plane..
+2020-07-16 15:32:40.286 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 399: Starting container [rke-log-linker] on host [192.168.100.125], try #1
+2020-07-16 15:32:40.635 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [etcd] Successfully started [rke-log-linker] container on host [192.168.100.125]
+2020-07-16 15:32:40.639 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 325: Removing container [rke-log-linker] on host [192.168.100.125], try #1
+2020-07-16 15:32:40.881 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [remove/rke-log-linker] Successfully removed container on host [192.168.100.125]
+2020-07-16 15:32:40.888 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [etcd] Successfully started etcd plane.. Checking etcd cluster health
+2020-07-16 15:32:40.903 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [controlplane] Building up Controller Plane..
+2020-07-16 15:32:40.905 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 204: Checking if container [service-sidekick] is running on host [192.168.100.125], try #1
+2020-07-16 15:32:40.917 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [sidekick] Sidekick container already created on host [192.168.100.125]
+2020-07-16 15:32:40.933 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [healthcheck] Start Healthcheck on service [kube-apiserver] on host [192.168.100.125]
+2020-07-16 15:32:40.944 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [healthcheck] service [kube-apiserver] on host [192.168.100.125] is healthy
+2020-07-16 15:32:40.953 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 237: Image [harbor.yzf.best:1180/rancher/rke-tools:v0.1.51] exists on host [192.168.100.125]
+2020-07-16 15:32:41.077 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 399: Starting container [rke-log-linker] on host [192.168.100.125], try #1
+2020-07-16 15:32:41.403 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [controlplane] Successfully started [rke-log-linker] container on host [192.168.100.125]
+2020-07-16 15:32:41.407 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 325: Removing container [rke-log-linker] on host [192.168.100.125], try #1
+2020-07-16 15:32:41.678 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [remove/rke-log-linker] Successfully removed container on host [192.168.100.125]
+2020-07-16 15:32:41.688 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [healthcheck] Start Healthcheck on service [kube-controller-manager] on host [192.168.100.125]
+2020-07-16 15:32:41.703 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [healthcheck] service [kube-controller-manager] on host [192.168.100.125] is healthy
+2020-07-16 15:32:41.717 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 237: Image [harbor.yzf.best:1180/rancher/rke-tools:v0.1.51] exists on host [192.168.100.125]
+2020-07-16 15:32:41.843 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 399: Starting container [rke-log-linker] on host [192.168.100.125], try #1
+2020-07-16 15:32:42.143 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [controlplane] Successfully started [rke-log-linker] container on host [192.168.100.125]
+2020-07-16 15:32:42.145 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 325: Removing container [rke-log-linker] on host [192.168.100.125], try #1
+2020-07-16 15:32:42.398 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [remove/rke-log-linker] Successfully removed container on host [192.168.100.125]
+2020-07-16 15:32:42.414 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 237: Image [harbor.yzf.best:1180/rancher/rke-tools:v0.1.51] exists on host [192.168.100.125]
+
+2020-07-16 15:32:42.424 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [healthcheck] Start Healthcheck on service [kube-scheduler] on host [192.168.100.125]
+
+2020-07-16 15:32:42.469 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [healthcheck] service [kube-scheduler] on host [192.168.100.125] is healthy
+2020-07-16 15:32:42.555 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 399: Starting container [rke-log-linker] on host [192.168.100.125], try #1
+2020-07-16 15:32:42.976 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [controlplane] Successfully started [rke-log-linker] container on host [192.168.100.125]
+2020-07-16 15:32:42.983 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/docker/docker.go 325: Removing container [rke-log-linker] on host [192.168.100.125], try #1
+2020-07-16 15:32:43.218 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/cluster/cluster.go 529: applying authz resources for cluster...
+2020-07-16 15:32:43.218 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [remove/rke-log-linker] Successfully removed container on host [192.168.100.125]
+2020-07-16 15:32:43.218 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/cluster/validation.go 21: validating version.....
+2020-07-16 15:32:43.218 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/cluster/validation.go 27: validating duplicate nodes.....
+2020-07-16 15:32:43.218 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/cluster/validation.go 33: validating host options.....
+2020-07-16 15:32:43.218 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/cluster/validation.go 39: validating auth options.....
+2020-07-16 15:32:43.218 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/cluster/validation.go 45: validating network options.....
+2020-07-16 15:32:43.218 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/cluster/validation.go 51: validating ingress options.....
+2020-07-16 15:32:43.218 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/cluster/validation.go 57: validating services options.....
+
+2020-07-16 15:32:43.218 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/util/util.go 160: Using proxy environment variable HTTP_PROXY with value [http://127.0.0.1:7890/]
+2020-07-16 15:32:43.219 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/util/util.go 160: Using proxy environment variable HTTPS_PROXY with value [http://127.0.0.1:7890/]
+2020-07-16 15:32:43.219 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/rke@v1.0.1-0.20200306072739-d68df03b1311/util/util.go 160: Using proxy environment variable NO_PROXY with value [localhost,127.0.0.0/8,::1,172.36.1.91,172.37.217.3,harbor.yzf.best,srv1.yzf.best,srv4.yzf.best,www.baidu.com,www.zhihu.com,yacd.haishan.me,srv1.yzf.best,srv4.yzf.best,gitlab.yzf.net]
+
+2020-07-16 15:32:43.221 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [controlplane] Successfully started Controller Plane..
+2020-07-16 15:32:43.226 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: apply authz resources.....
+2020-07-16 15:32:43.235 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: init cluster object.....
+2020-07-16 15:32:43.244 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: getting localKubeConfigPath.....
+                                local/management-state/rke/rke-695961887/kube_config_cluster.yml
+2020-07-16 15:32:43.253 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: getting stateFilePath.....
+                                local/management-state/rke/rke-695961887/cluster.rkestate
+2020-07-16 15:32:43.261 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: getting certificateDir.....
+                                local/management-state/rke/rke-695961887/cluster_certs
+
+
+2020-07-16 15:32:43.270 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: setting cluster defaults.....
+2020-07-16 15:32:43.280 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: setting network options.....
+2020-07-16 15:32:43.287 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: setting cloud provider.....
+2020-07-16 15:32:43.297 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: invert index hosts.....
+2020-07-16 15:32:43.314 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: validating cluster.....
+2020-07-16 15:32:43.318 [INFO][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 33: cluster [c-bblkn] provisioning: [authz] Creating rke-job-deployer ServiceAccount
+2020-07-16 15:32:43.586733 W | etcdserver: read-only range request "key:\"/registry/namespaces/kube-system\" " with result "range_response_count:1 size:776" took too long (102.038264ms) to execute
+2020-07-16 15:33:08.228 [ERROR][601] /home/yzf/goproject/rancher/pkg/clusterprovisioninglogger/log.go 31: cluster [c-bblkn] provisioning: Failed to apply the ServiceAccount needed for job execution: Post https://192.168.100.125:6443/apis/rbac.authorization.k8s.io/v1/clusterrolebindings?timeout=30s: dial tcp 127.0.0.1:7890: connect: connection refused
+2020-07-16 15:33:08.263 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/kontainer-engine@v0.0.4-dev.0.20191231022711-2cbd0ce15d2f/service/service.go 520: stopping the kontainerdriver [rancherkubernetesengine] .....
+2020-07-16 15:33:08.263 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/kontainer-engine@v0.0.4-dev.0.20191231022711-2cbd0ce15d2f/service/service.go 527: kontainerdriver rancherkubernetesengine stopped
+2020-07-16 15:33:08.273 [ERROR][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 290: ClusterController c-bblkn [cluster-provisioner-controller] failed with : Failed to apply the ServiceAccount needed for job execution: Post https://192.168.100.125:6443/apis/rbac.authorization.k8s.io/v1/clusterrolebindings?timeout=30s: dial tcp 127.0.0.1:7890: connect: connection refused
+2020-07-16 15:33:08.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 315: Provision to create cluster [c-bblkn]
+2020-07-16 15:33:08.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 331: pending cluster [c-bblkn]
+2020-07-16 15:33:08.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 656: cluster [c-bblkn] driver is [rancherKubernetesEngine]
+2020-07-16 15:33:08.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 356: validating cluster driver.....
+2020-07-16 15:33:08.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 361: validating cluster driver..... new driver: rancherKubernetesEngine
+2020-07-16 15:33:08.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 337: begin to provision cluster.....
+2020-07-16 15:33:08.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 344: update cluster in provision do logic.....
+2020-07-16 15:33:08.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 291: updating cluster [c-bblkn], is create? [true]
+2020-07-16 15:33:08.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 406: reconcile cluster [c-bblkn], is create [true]
+2020-07-16 15:33:08.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 656: cluster [c-bblkn] driver is [rancherKubernetesEngine]
+2020-07-16 15:33:08.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 453: set generic configs.....
+2020-07-16 15:33:08.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 677: reconcile rke nodes.....
+2020-07-16 15:33:08.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 837: listing node of cluster [c-bblkn]
+2020-07-16 15:33:08.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 889: append node [name: c-bblkn:m-gcnj5, address: 192.168.100.124, internalAddress: 192.168.100.124, role: [worker], user: root]
+2020-07-16 15:33:08.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 889: append node [name: c-bblkn:m-lzvzv, address: 192.168.100.125, internalAddress: 192.168.100.125, role: [etcd controlplane worker], user: root]
+2020-07-16 15:33:08.275 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 677: reconcile rke nodes.....
+2020-07-16 15:33:08.275 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 837: listing node of cluster [c-bblkn]
+2020-07-16 15:33:08.275 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 889: append node [name: c-bblkn:m-lzvzv, address: 192.168.100.125, internalAddress: 192.168.100.125, role: [etcd controlplane worker], user: root]
+2020-07-16 15:33:08.275 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 889: append node [name: c-bblkn:m-gcnj5, address: 192.168.100.124, internalAddress: 192.168.100.124, role: [worker], user: root]
+2020-07-16 15:33:08.277 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 315: Provision to create cluster [c-bblkn]
+2020-07-16 15:33:08.277 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 331: pending cluster [c-bblkn]
+2020-07-16 15:33:08.277 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 656: cluster [c-bblkn] driver is [rancherKubernetesEngine]
+2020-07-16 15:33:08.277 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 356: validating cluster driver.....
+2020-07-16 15:33:08.277 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 361: validating cluster driver..... new driver: rancherKubernetesEngine
+2020-07-16 15:33:08.277 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 337: begin to provision cluster.....
+2020-07-16 15:33:08.277 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 344: update cluster in provision do logic.....
+2020-07-16 15:33:08.277 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 291: updating cluster [c-bblkn], is create? [true]
+2020-07-16 15:33:08.277 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 406: reconcile cluster [c-bblkn], is create [true]
+2020-07-16 15:33:08.277 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 656: cluster [c-bblkn] driver is [rancherKubernetesEngine]
+2020-07-16 15:33:08.277 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 453: set generic configs.....
+2020-07-16 15:33:08.277 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 677: reconcile rke nodes.....
+2020-07-16 15:33:08.277 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 837: listing node of cluster [c-bblkn]
+2020-07-16 15:33:08.277 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 889: append node [name: c-bblkn:m-gcnj5, address: 192.168.100.124, internalAddress: 192.168.100.124, role: [worker], user: root]
+2020-07-16 15:33:08.277 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 889: append node [name: c-bblkn:m-lzvzv, address: 192.168.100.125, internalAddress: 192.168.100.125, role: [etcd controlplane worker], user: root]
+2020-07-16 15:33:08.278 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 677: reconcile rke nodes.....
+2020-07-16 15:33:08.278 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 837: listing node of cluster [c-bblkn]
+2020-07-16 15:33:08.278 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 889: append node [name: c-bblkn:m-gcnj5, address: 192.168.100.124, internalAddress: 192.168.100.124, role: [worker], user: root]
+2020-07-16 15:33:08.278 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 889: append node [name: c-bblkn:m-lzvzv, address: 192.168.100.125, internalAddress: 192.168.100.125, role: [etcd controlplane worker], user: root]
+2020-07-16 15:33:12.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 315: Provision to create cluster [c-bblkn]
+2020-07-16 15:33:12.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 331: pending cluster [c-bblkn]
+2020-07-16 15:33:12.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 656: cluster [c-bblkn] driver is [rancherKubernetesEngine]
+2020-07-16 15:33:12.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 356: validating cluster driver.....
+2020-07-16 15:33:12.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 361: validating cluster driver..... new driver: rancherKubernetesEngine
+2020-07-16 15:33:12.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 337: begin to provision cluster.....
+2020-07-16 15:33:12.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 344: update cluster in provision do logic.....
+2020-07-16 15:33:12.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 291: updating cluster [c-bblkn], is create? [true]
+2020-07-16 15:33:12.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 406: reconcile cluster [c-bblkn], is create [true]
+2020-07-16 15:33:12.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 656: cluster [c-bblkn] driver is [rancherKubernetesEngine]
+2020-07-16 15:33:12.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 453: set generic configs.....
+2020-07-16 15:33:12.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 677: reconcile rke nodes.....
+2020-07-16 15:33:12.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 837: listing node of cluster [c-bblkn]
+2020-07-16 15:33:12.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 889: append node [name: c-bblkn:m-lzvzv, address: 192.168.100.125, internalAddress: 192.168.100.125, role: [etcd controlplane worker], user: root]
+2020-07-16 15:33:12.274 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 889: append node [name: c-bblkn:m-gcnj5, address: 192.168.100.124, internalAddress: 192.168.100.124, role: [worker], user: root]
+2020-07-16 15:33:12.275 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 677: reconcile rke nodes.....
+2020-07-16 15:33:12.275 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 837: listing node of cluster [c-bblkn]
+2020-07-16 15:33:12.275 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 889: append node [name: c-bblkn:m-gcnj5, address: 192.168.100.124, internalAddress: 192.168.100.124, role: [worker], user: root]
+2020-07-16 15:33:12.275 [INFO][601] /home/yzf/goproject/rancher/pkg/controllers/management/clusterprovisioner/provisioner.go 889: append node [name: c-bblkn:m-lzvzv, address: 192.168.100.125, internalAddress: 192.168.100.125, role: [etcd controlplane worker], user: root]
+2020/07/16 15:33:13 http: TLS handshake error from 127.0.0.1:45042: EOF
+2020-07-16 15:33:15.908 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ClusterTemplateRevisionController controller
+2020-07-16 15:33:15.908 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ProjectLoggingController controller
+2020-07-16 15:33:15.908 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down CatalogTemplateController controller
+2020-07-16 15:33:15.908 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ClusterTemplateController controller
+2020-07-16 15:33:15.908 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down RKEK8sSystemImageController controller
+2020-07-16 15:33:15.910 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down FeatureController controller
+2020-07-16 15:33:15.910 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down PipelineController controller
+2020-07-16 15:33:15.910 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down AppController controller
+2020-07-16 15:33:15.910 [ERROR][601] /home/yzf/goproject/rancher/pkg/dynamiclistener/server.go 537: server on [::]:8443 returned err: accept tcp [::]:8443: use of closed network connection
+2020-07-16 15:33:15.910 [ERROR][601] /home/yzf/goproject/rancher/pkg/dynamiclistener/server.go 537: server on [::]:8080 returned err: accept tcp [::]:8080: use of closed network connection
+2020-07-16 15:33:15.912285 N | pkg/osutil: received interrupt signal, shutting down...
+time="2020-07-16T15:33:15.906103403+08:00" level=info msg="Shutting down helm.cattle.io/v1, Kind=HelmChart workers"
+time="2020-07-16T15:33:15.906098157+08:00" level=info msg="Shutting down k3s.cattle.io/v1, Kind=ListenerConfig workers"
+time="2020-07-16T15:33:15.906098162+08:00" level=info msg="Shutting down /v1, Kind=Endpoints workers"
+time="2020-07-16T15:33:15.912737841+08:00" level=info msg="Shutting down k3s.cattle.io/v1, Kind=Addon workers"
+time="2020-07-16T15:33:15.912783152+08:00" level=fatal msg="leaderelection lost for k3s"
+time="2020-07-16T15:33:15.913046332+08:00" level=info msg="Shutting down /v1, Kind=Pod workers"
+time="2020-07-16T15:33:15.913063033+08:00" level=info msg="Shutting down /v1, Kind=Service workers"
+time="2020-07-16T15:33:15.913072804+08:00" level=info msg="Shutting down /v1, Kind=Node workers"
+2020-07-16 15:33:15.916 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ClusterCatalogController controller
+2020-07-16 15:33:15.916 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ProjectCatalogController controller
+2020-07-16 15:33:15.916 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down CatalogTemplateVersionController controller
+2020-07-16 15:33:15.916 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down CatalogTemplateController controller
+2020-07-16 15:33:15.916 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down CatalogController controller
+2020-07-16 15:33:15.916 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down SettingController controller
+2020-07-16 15:33:15.916 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down GlobalRoleBindingController controller
+2020-07-16 15:33:15.916 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ClusterRoleTemplateBindingController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ProjectRoleTemplateBindingController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down TenantRoleTemplateBindingController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down GlobalRoleController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down TenantController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down GlobalDNSController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down NodePoolController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down NamespaceController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down DynamicSchemaController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down SecretController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down GroupMemberController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ClusterController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down NodeDriverController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down TokenController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down PipelineExecutionController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ClusterRoleBindingController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down EtcdBackupController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ClusterTemplateController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ProjectController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ClusterTemplateRevisionController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down RKEK8sServiceOptionController controller
+2020-07-16 15:33:15.918 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down RoleController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ListenConfigController controller
+2020-07-16 15:33:15.918 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down MultiClusterAppController controller
+2020-07-16 15:33:15.918 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down MultiClusterAppRevisionController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ClusterRoleTemplateBindingController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down TenantController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down AuthConfigController controller
+2020-07-16 15:33:15.918 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down SecretController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down AppController controller
+2020-07-16 15:33:15.918 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down UserAttributeController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ClusterRegistrationTokenController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down PodSecurityPolicyTemplateController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ProjectController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down SettingController controller
+2020-07-16 15:33:15.918 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down KontainerDriverController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down NodeTemplateController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down GlobalDNSController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ProjectCatalogController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down SecretController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down CatalogTemplateVersionController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ClusterCatalogController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down UserController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down KontainerDriverController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down NodeController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down SecretController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down PodSecurityPolicyTemplateProjectBindingController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down GroupController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down NodeController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down RoleController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ClusterRoleController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ComposeConfigController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down RoleBindingController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ClusterRoleController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down RKEAddonController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down SourceCodeCredentialController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down MultiClusterAppRevisionController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down RKEK8sServiceOptionController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down MultiClusterAppController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down GlobalDNSController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ClusterController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ProjectRoleTemplateBindingController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down GlobalRoleController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down UserController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down PodSecurityPolicyTemplateController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ClusterRoleBindingController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down RoleTemplateController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down SourceCodeRepositoryController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down RoleBindingController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down DynamicSchemaController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down GlobalRoleBindingController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down SecretController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down RoleTemplateController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down UserAttributeController controller
+2020-07-16 15:33:15.917 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down TokenController controller
+2020-07-16 15:33:15.918 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ClusterTemplateRevisionController controller
+2020-07-16 15:33:15.918 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down NamespaceController controller
+2020-07-16 15:33:15.918 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down ClusterTemplateController controller
+2020-07-16 15:33:15.918 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down NodeTemplateController controller
+2020-07-16 15:33:15.918 [INFO][601] /home/yzf/gopath/pkg/mod/gitee.com/powerpaas/norman@v0.0.0-20200409083428-0e48f61c1c1c/controller/generic_controller.go 260: Shutting down GlobalDNSProviderController controller
+2020-07-16 15:33:15.923 [FATAL][601] /home/yzf/goproject/rancher/main.go 174: context canceled

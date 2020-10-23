@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <title>Go Web Programming</title>
+</head>
+
+<body>
+<div> This is t1.html before</div>
+<div>This is the value of the dot in t1.html - [{{ . }}]</div>
+<hr />
+{{ template "t2.html" }}
+<hr />
+<div> This is t1.html after</div>
+</body>
+
+</html>
+
+{{define "t2.html"}}
+    <div style="background-color: yellow;">
+        This is t2.html<br/>
+        This is the value of the dot in t2.html - [{{ . }}]
+    </div>
+{{end}}
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+name: {{.Release.Name}}-configmap
+data:
+{{- $files := .Files}}
+{{- range tuple "config1.toml" "config2.toml" "config3.toml"}}
+    {{.}}: |-
+    {{$files.Get .}}
+{{- end}}

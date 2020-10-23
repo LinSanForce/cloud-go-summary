@@ -1,0 +1,138 @@
+2020/04/30 11:02:11 http: TLS handshake error from 127.0.0.1:54938: EOF
+2020/04/30 11:02:11 http: TLS handshake error from 127.0.0.1:54936: EOF
+2020/04/30 11:02:12 http: TLS handshake error from 127.0.0.1:54952: EOF
+2020-04-30 11:02:23.690935 W | wal: sync duration of 2.964553011s, expected less than 1s
+2020-04-30 11:02:24.651779 W | etcdserver: read-only range request "key:\"/registry/namespaces\" range_end:\"/registry/namespacet\"
+            count_only:true " with result "range_response_count:0 size:8" took too long (1.126121948s) to execute
+2020-04-30 11:02:24.651800 W | etcdserver: read-only range request "key:\"/registry/roles\" range_end:\"/registry/rolet\"
+            count_only:true " with result "range_response_count:0 size:8" took too long (2.027670538s) to execute
+2020-04-30 11:02:24.651812 W | etcdserver: read-only range request "key:\"/registry/management.cattle.io/podsecuritypolicytemplateprojectbindings\"
+            range_end:\"/registry/management.cattle.io/podsecuritypolicytemplateprojectbindingt\" count_only:true " with result "range_response_count:0 size:6" took too long (2.9929639s) to execute
+2020-04-30 11:02:24.651840 W | etcdserver: read-only range request "key:\"/registry/monitoring.coreos.com/servicemonitors\"
+            range_end:\"/registry/monitoring.coreos.com/servicemonitort\" count_only:true " with result "range_response_count:0
+            size:6" took too long (3.894382871s) to execute
+2020-04-30 11:02:24.651858 W | etcdserver: read-only range request "key:\"/registry/management.cattle.io/rkek8ssystemimages\"
+            range_end:\"/registry/management.cattle.io/rkek8ssystemimaget\" count_only:true " with result "range_response_count:0
+            size:8" took too long (1.332175856s) to execute
+2020-04-30 11:02:24.651863 W | etcdserver: read-only range request "key:\"/registry/namespaces/default\" " with result "range_response_count:1
+            size:769" took too long (834.929163ms) to execute
+2020-04-30 11:02:24.651875 W | etcdserver: read-only range request "key:\"/registry/minions/\" range_end:\"/registry/minions0\" "
+            with result "range_response_count:0 size:6" took too long (3.885607362s) to execute
+2020-04-30 11:02:24.651894 W | etcdserver: read-only range request "key:\"/registry/management.cattle.io/users\"
+            range_end:\"/registry/management.cattle.io/usert\" count_only:true " with result "range_response_count:0 size:8"
+            took too long (462.203344ms) to execute
+2020-04-30 11:02:24.651899 W | etcdserver: read-only range request "key:\"/registry/configmaps/kube-system/k3s\" " with
+            result "range_response_count:1 size:467" took too long (2.478268315s) to execute
+2020-04-30 11:02:24.651907 W | etcdserver: read-only range request "key:\"/registry/monitoring.coreos.com/prometheusrules\"
+            range_end:\"/registry/monitoring.coreos.com/prometheusrulet\" count_only:true " with result "range_response_count:0
+            size:6" took too long (3.498635197s) to execute
+2020-04-30 11:02:24.651946 W | etcdserver: read-only range request "key:\"/registry/management.cattle.io/clusterregistrationtokens\"
+            range_end:\"/registry/management.cattle.io/clusterregistrationtokent\" count_only:true " with result "range_response_count:0 size:8"
+            took too long (2.77113551s) to execute
+2020-04-30 11:02:24.651984 W | etcdserver: read-only range request "key:\"/registry/services/endpoints/kube-system/kube-scheduler\" "
+            with result "range_response_count:1 size:535" took too long (3.50111891s) to execute
+2020-04-30 11:02:24.652003 W | etcdserver: read-only range request "key:\"/registry/services/endpoints/kube-system/kube-controller-manager\" "
+            with result "range_response_count:1 size:553" took too long (1.922540705s) to execute
+2020-04-30 11:02:27.466622 W | wal: sync duration of 2.75405348s, expected less than 1s
+2020-04-30 11:02:27.467336 W | etcdserver: read-only range request "key:\"/registry/management.cattle.io/clusteralertrules\"
+            range_end:\"/registry/management.cattle.io/clusteralertrulet\" count_only:true " with result "range_response_count:0 size:8"
+            took too long (2.373465153s) to execute
+2020-04-30 11:02:27.630826 W | etcdserver: read-only range request "key:\"/registry/management.cattle.io/settings\"
+            range_end:\"/registry/management.cattle.io/settingt\" count_only:true " with result "range_response_count:0 size:8"
+            took too long (303.905349ms) to execute
+2020-04-30 11:02:27.630913 W | etcdserver: read-only range request "key:\"/registry/services/endpoints/kube-system/kube-controller-manager\" "
+            with result "range_response_count:1 size:553" took too long (951.429462ms) to execute
+2020-04-30 11:02:27.630950 W | etcdserver: read-only range request "key:\"/registry/namespaces/kube-system\" "
+            with result "range_response_count:1 size:777" took too long (2.119173591s) to execute
+2020-04-30 11:02:27.631014 W | etcdserver: read-only range request "key:\"/registry/configmaps/kube-system/k3s\" "
+            with result "range_response_count:1 size:467" took too long (974.061759ms) to execute
+2020-04-30 11:02:27.631055 W | etcdserver: read-only range request "key:\"/registry/podtemplates\"
+            range_end:\"/registry/podtemplatet\" count_only:true "
+            with result "range_response_count:0 size:6" took too long (432.865851ms) to execute
+2020-04-30 11:02:27.631141 W | etcdserver: read-only range request "key:\"/registry/pods\" range_end:\"/registry/podt\" count_only:true " with result "range_response_count:0 size:6" took too long (1.294921051s) to execute
+2020-04-30 11:02:27.631214 W | etcdserver: read-only range request "key:\"/registry/daemonsets\" range_end:\"/registry/daemonsett\" count_only:true " with result "range_response_count:0 size:6" took too long (1.833520736s) to execute
+2020-04-30 11:02:27.631232 W | etcdserver: read-only range request "key:\"/registry/management.cattle.io/clustertemplates\" range_end:\"/registry/management.cattle.io/clustertemplatet\" count_only:true " with result "range_response_count:0 size:8" took too long (735.777983ms) to execute
+2020-04-30 11:02:27.631279 W | etcdserver: read-only range request "key:\"/registry/services/endpoints/kube-system/kube-scheduler\" " with result "range_response_count:1 size:535" took too long (951.767693ms) to execute
+
+
+2020-04-30 11:02:28.854650 W | etcdserver: request "header:<ID:7587846054989141979 > txn:<compare:<target:MOD
+            key:\"/registry/management.cattle.io/nodes/c-lshf5/m-55fc4\" mod_revision:1584983 >
+            success:<request_put:<key:\"/registry/management.cattle.io/nodes/c-lshf5/m-55fc4\" value_size:1663 >>
+            failure:<request_range:<key:\"/registry/management.cattle.io/nodes/c-lshf5/m-55fc4\" > >>"
+            with result "size:18" took too long (158.247209ms) to execute
+
+
+2020/04/30 11:02:41 http: TLS handshake error from 127.0.0.1:55066: EOF
+2020-04-30 11:02:52.414215 I | mvcc: store.index: compact 1584409
+2020-04-30 11:02:52.417895 I | mvcc: finished scheduled compaction at 1584409 (took 2.713607ms)
+2020/04/30 11:03:11 http: TLS handshake error from 127.0.0.1:55194: EOF
+2020/04/30 11:03:11 http: TLS handshake error from 127.0.0.1:55198: EOF
+2020/04/30 11:03:13 http: TLS handshake error from 127.0.0.1:55206: EOF
+2020-04-30 11:03:40.440630 W | etcdserver: read-only range request "key:\"/registry/services/endpoints/kube-system/kube-scheduler\" " with result "range_response_count:1 size:535" took too long (129.435099ms) to execute
+2020-04-30 11:03:40.440669 W | etcdserver: read-only range request "key:\"/registry/services/endpoints/kube-system/kube-controller-manager\" " with result "range_response_count:1 size:553" took too long (111.186247ms) to execute
+2020/04/30 11:03:42 http: TLS handshake error from 127.0.0.1:55370: EOF
+2020-04-30 11:03:50.749936 W | etcdserver: read-only range request "key:\"/registry/management.cattle.io/clusterregistrationtokens\" range_end:\"/registry/management.cattle.io/clusterregistrationtokent\" count_only:true " with result "range_response_count:0 size:8" took too long (139.153449ms) to execute
+
+
+2020-04-30 11:04:37.200780 W | etcdserver: read-only range request "key:\"/registry/services/endpoints/kube-system/kube-scheduler\" " with result "range_response_count:1 size:535" took too long (344.073769ms) to execute
+2020-04-30 11:04:37.200817 W | etcdserver: read-only range request "key:\"/registry/management.cattle.io/notifiers\" range_end:\"/registry/management.cattle.io/notifiert\" count_only:true " with result "range_response_count:0 size:6" took too long (150.717314ms) to execute
+
+2020-04-30 11:04:42.055556 W | wal: sync duration of 1.310486037s, expected less than 1s
+2020-04-30 11:04:42.055794 W | etcdserver: read-only range request "key:\"/registry/poddisruptionbudgets\" range_end:\"/registry/poddisruptionbudgett\" count_only:true " with result "range_response_count:0 size:6" took too long (1.224409167s) to execute
+2020-04-30 11:04:42.055818 W | etcdserver: read-only range request "key:\"/registry/management.cattle.io/roletemplates\" range_end:\"/registry/management.cattle.io/roletemplatet\" count_only:true " with result "range_response_count:0 size:8" took too long (1.227838245s) to execute
+2020-04-30 11:04:42.055837 W | etcdserver: read-only range request "key:\"/registry/management.cattle.io/nodetemplates/cattle-global-nt/nt-dfk47\" " with result "range_response_count:1 size:1220" took too long (114.368446ms) to execute
+2020-04-30 11:04:42.055857 W | etcdserver: read-only range request "key:\"/registry/services/endpoints/kube-system/kube-scheduler\" " with result "range_response_count:1 size:535" took too long (849.858889ms) to execute
+
+2020-04-30 11:04:42.534198 W | etcdserver: read-only range request "key:\"/registry/mutatingwebhookconfigurations\" range_end:\"/registry/mutatingwebhookconfigurationt\" count_only:true " with result "range_response_count:0 size:6" took too long (399.849512ms) to execute
+
+
+2020-04-30 11:04:42.544513 W | etcdserver: read-only range request "key:\"/registry/management.cattle.io/settings/cacerts\" " with result "range_response_count:1 size:1452" took too long (227.930759ms) to execute
+2020-04-30 11:04:42.544576 W | etcdserver: read-only range request "key:\"/registry/management.cattle.io/nodetemplates/cattle-global-nt/nt-dfk47\" " with result "range_response_count:1 size:1220" took too long (258.586539ms) to execute
+2020-04-30 11:04:42.544623 W | etcdserver: read-only range request "key:\"/registry/configmaps/kube-system/k3s\" " with result "range_response_count:1 size:467" took too long (107.443146ms) to execute
+2020-04-30 11:04:42.544714 W | etcdserver: read-only range request "key:\"/registry/management.cattle.io/clusteralerts\" range_end:\"/registry/management.cattle.io/clusteralertt\" count_only:true " with result "range_response_count:0 size:6" took too long (320.632402ms) to execute
+2020-04-30 11:04:42.544794 W | etcdserver: read-only range request "key:\"/registry/management.cattle.io/nodes/c-lshf5/m-dhlr9\" " with result "range_response_count:1 size:4335" took too long (290.196317ms) to execute
+
+2020-04-30 11:05:01.249067 W | etcdserver: read-only range request "key:\"/registry/namespaces/kube-system\" " with result "range_response_count:1 size:777" took too long (319.147771ms) to execute
+2020-04-30 11:05:01.249234 W | etcdserver: request "header:<ID:7587846054989143008 > txn:<compare:<target:MOD key:\"/registry/management.cattle.io/clusters/c-lshf5\" mod_revision:1585350 > success:<request_put:<key:\"/registry/management.cattle.io/clusters/c-lshf5\" value_size:3796 >> failure:<request_range:<key:\"/registry/management.cattle.io/clusters/c-lshf5\" > >>" with result "size:18" took too long (148.815469ms) to execute
+
+2020/04/30 11:05:14 http: TLS handshake error from 127.0.0.1:55768: EOF
+2020-04-30 11:05:39.121638 W | etcdserver: read-only range request "key:\"/registry/services/endpoints/kube-system/kube-controller-manager\" " with result "range_response_count:1 size:553" took too long (200.410695ms) to execute
+2020/04/30 11:05:43 http: TLS handshake error from 127.0.0.1:55798: EOF
+2020/04/30 11:05:43 http: TLS handshake error from 127.0.0.1:55796: EOF
+2020-04-30 11:05:43.548662 W | etcdserver: read-only range request "key:\"/registry/clusterrolebindings\" range_end:\"/registry/clusterrolebindingt\" count_only:true " with result "range_response_count:0 size:8" took too long (296.864589ms) to execute
+2020-04-30 11:05:43.548677 W | etcdserver: read-only range request "key:\"/registry/services/endpoints/kube-system/kube-controller-manager\" " with result "range_response_count:1 size:553" took too long (418.330248ms) to execute
+2020-04-30 11:05:43.548697 W | etcdserver: read-only range request "key:\"/registry/daemonsets\" range_end:\"/registry/daemonsett\" count_only:true " with result "range_response_count:0 size:6" took too long (126.758291ms) to execute
+2020-04-30 11:05:43.548710 W | etcdserver: read-only range request "key:\"/registry/management.cattle.io/podsecuritypolicytemplates\" range_end:\"/registry/management.cattle.io/podsecuritypolicytemplatet\" count_only:true " with result "range_response_count:0 size:8" took too long (234.654966ms) to execute
+2020-04-30 11:05:44.167540 W | etcdserver: read-only range request "key:\"/registry/management.cattle.io/projectalerts\" range_end:\"/registry/management.cattle.io/projectalertt\" count_only:true " with result "range_response_count:0 size:6" took too long (103.584254ms) to execute
+2020-04-30 11:05:53.932165 W | etcdserver: read-only range request "key:\"/registry/namespaces/default\" " with result "range_response_count:1 size:769" took too long (112.247581ms) to execute
+2020-04-30 11:05:53.932190 W | etcdserver: read-only range request "key:\"/registry/management.cattle.io/rkek8ssystemimages\" range_end:\"/registry/management.cattle.io/rkek8ssystemimaget\" count_only:true " with result "range_response_count:0 size:8" took too long (328.146246ms) to execute
+2020-04-30 11:05:53.932279 W | etcdserver: read-only range request "key:\"/registry/management.cattle.io/notifiers\" range_end:\"/registry/management.cattle.io/notifiert\" count_only:true " with result "range_response_count:0 size:6" took too long (212.4907ms) to execute
+
+
+2020-04-30 11:05:56.983762 W | etcdserver: read-only range request "key:\"/registry/cronjobs\" range_end:\"/registry/cronjobt\" count_only:true " with result "range_response_count:0 size:6" took too long (399.61972ms) to execute
+2020-04-30 11:05:56.987371 W | etcdserver: read-only range request "key:\"/registry/services/endpoints/kube-system/kube-scheduler\" " with result "range_response_count:1 size:535" took too long (223.791426ms) to execute
+2020-04-30 11:05:56.987591 W | etcdserver: read-only range request "key:\"/registry/configmaps/kube-system/k3s\" " with result "range_response_count:1 size:467" took too long (129.131038ms) to execute
+
+
+2020-04-30 11:07:38.223636 W | etcdserver: read-only range request "key:\"/registry/services/endpoints/kube-system/kube-controller-manager\" "
+                                           with result "range_response_count:1 size:553" took too long (188.498677ms) to execute
+
+
+E0430 11:07:40.665262   21890 reflector.go:123] pkg/mod/github.com/rancher/client-go@v1.16.0-rancher.3/tools/cache/reflector.go:96:
+            Failed to list *v3.ClusterUserAttribute: Get https://192.168.99.124:6443/apis/cluster.cattle.io
+            /v3/namespaces/cattle-system/clusteruserattributes?limit=500&resourceVersion=0&timeout=30s:
+            dial tcp 127.0.0.1:6443: connect: connection refused
+E0430 11:07:40.674889   21890 reflector.go:123] pkg/mod/github.com/rancher/client-go@v1.16.0-rancher.3/tools/cache/reflector.go:96:
+            Failed to list *v1.Event: Get https://192.168.99.124:6443/api/v1/events?limit=500&resourceVersion=0&timeout=30s:
+            dial tcp 127.0.0.1:6443: connect: connection refused
+E0430 11:07:40.727541   21890 reflector.go:123] pkg/mod/github.com/rancher/client-go@v1.16.0-rancher.3/tools/cache/reflector.go:96: Failed to list *v1.Deployment: Get https://192.168.99.124:6443/apis/apps/v1/deployments?limit=500&resourceVersion=0&timeout=30s: dial tcp 127.0.0.1:6443: connect: connection refused
+E0430 11:07:40.825371   21890 reflector.go:280] pkg/mod/github.com/rancher/client-go@v1.16.0-rancher.3/tools/cache/reflector.go:96: Failed to watch *v1.NetworkPolicy: Get https://192.168.99.124:6443/apis/networking.k8s.io/v1/watch/networkpolicies?allowWatchBookmarks=true&resourceVersion=1&timeout=30m0s&timeoutSeconds=534: dial tcp 127.0.0.1:6443: connect: connection refused
+E0430 11:07:40.848897   21890 reflector.go:280] pkg/mod/github.com/rancher/client-go@v1.16.0-rancher.3/tools/cache/reflector.go:96: Failed to watch *v1.ClusterRole: Get https://192.168.99.124:6443/apis/rbac.authorization.k8s.io/v1/watch/clusterroles?allowWatchBookmarks=true&resourceVersion=567&timeout=30m0s&timeoutSeconds=594: dial tcp 127.0.0.1:6443: connect: connection refused
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+2020-04-30 11:04:58.723 [INFO][21890] docker.go 237: Image [harbor.yzf.best:1180/rancher/rke-tools:v0.1.51]
+                                        exists on host [192.168.99.124]
+
+

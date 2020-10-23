@@ -1,0 +1,20 @@
+{{- if .Values.ingress.enabled -}}
+# This file created by chart-manager
+# Created at 2020-03-12 15:02:41.47160878 +0000 UTC m=+169.371735034
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  labels:
+    app: {{ template "project.fullName" . }}
+  name: {{ template "project.fullName" . }}
+spec:
+  rules:
+  - host: {{ .Values.ingress.hosts.name }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ template "project.fullName" . }}
+          servicePort: {{ .Values.service.port }}
+        path: /sso
+
+{{- end -}}

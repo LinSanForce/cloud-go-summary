@@ -1,0 +1,33 @@
+----------------- 日志syslog驱动收集以及配置
+ 1.   vim /etc/rsyslog.conf       去掉下面4行前面的#号注释符.   (开启tcp和udp接受)
+
+    module(load="imudp")
+    input(type="imudp" port="514")
+
+    module(load="imtcp")
+    input(type="imtcp" port="514")
+
+
+ 2.   vim /etc/default/rsyslog   (-r 允许接受外来日志消息. -x 禁用掉dns记录项不够齐全或其他的日志中心的日志)
+
+ RSYSLOGD_OPTIONS=”-c5 -r -x”
+
+       保存退出
+
+ 3.   重启rsyslog
+
+      #systemctl restart rsyslog
+
+ 4.   查看其是否启动
+
+       netstat -nultp | grep 514
+
+ 5,  进入 /var/log/harbor目录，根据 docker-compose.yaml 文件"logging-driver-tag"定位具体组件的日志信息。
+
+
+ docker支持的驱动模式, 一般是 json-file以及syslog，日志收集分析。
+
+
+————————————————————————————————————————————————————————————————
+
+Harbor平滑升级以及新功能预研

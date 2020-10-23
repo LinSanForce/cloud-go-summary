@@ -1,0 +1,26 @@
+{
+    "sharded": true,
+    "vindexes": {
+        "hash": {
+            "type": "hash"
+        }
+    },
+    "tables": {
+        "task_batch": {
+            "column_vindexes": [
+                {
+                    "column": "serial_no",
+                    "name": "hash"
+                }
+            ]
+        },
+        "task_batch_detail": {
+            "column_vindexes": [
+                {
+                    "column": "task_id",
+                    "name": "hash"
+                }
+            ]
+        }
+    }
+}

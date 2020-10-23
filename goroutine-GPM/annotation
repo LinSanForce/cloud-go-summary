@@ -1,0 +1,58 @@
+
+// stack(goroutine协程栈), goroutine采用动态扩容方式 初始2KB, 动态增长扩容.
+    Linux user stack大小固定,默认8192KB, go语言通过在函数调用出插桩,
+    每次调用的时候检查当前栈的空间是否能够满足新函数的执行.
+
+    go栈扩容和拷贝不是容易的事,具体执行在 runtime/asm_amd64.s : runtime.morestack_noctxt,
+    在这个汇编上下文中, CALL runtime·newstack(SB)就是执行了扩容操作.
+    当然,相应的还有栈缩容的逻辑 func shrinkstack
+
+
+// G-P-M模型, 用户线程与内核线程KSE（kernel scheduling entity）是M:N的.
+// Go包含两个运行队列  GRQ:全局运行队列  LRQ:本地运行队列
+
+上下文切换时机:
+ 1,go, 创建 goroutine
+ 2, gc垃圾回收, gc也是goroutine
+ 3, system call 系统调用, 阻塞当前G
+ 4, sync 同步
+
+
+------------ Go内存分配
+ span是内存管理的基本单位, span将若干个页分成块进行管理。
+
+1,mcache: per-P cache，可以认为是 local cache。 一个P对应一个mcache,好处在于不用加锁.
+    mcache结构引到了 mspan,
+2,mcentral: 全局 cache，mcache 不够用的时候向 mcentral 申请。
+3,mheap: 当 mcentral 也不够用的时候，通过 mheap 向操作系统申请。
+
+这种分配模式遵循了TCMalloc规范:
+  (1)首先关注小对象分配(小于Page大小, 4KB), 一般是分配变长记录(采用按照16Byte递增 规格取整方案),
+  (2) 再关注大对象(大于Page)的内存分配, 多个Page组成span,
+      分配对象时，大的对象直接分配 Span，小的对象从 Span 中分配。
+      在span中记录起始Page编号以及Page数量(这样实现了 从Span到Page的映射).
+  (3) PageHeap(按照Page进行规格取整) 实现 Page到Span的映射.
+  (4) 每种规则的对象都有一个独立的内存分配单元: CentralCache,
+      用链表把所有 Span 组织起来，每次需要分配时就找一个 Span 从中分配一个 Object
+
+
+---> Go 采用TCMalloc分配内存的方式, 包含了以下几个结构
+    1, mcache
+        -> alloc [67]*mspan , 分配内存时,为object在alloc数组中选择合适的元素分配,
+                              一共67种块.
+    2, mcentral
+    3, mheap   与操作系统交互, 通过 mallocinit 函数初始化
+        -> spans
+        -> bitmap
+        -> arena
+    3, mspan
+        -> npages 大小为Page整数倍
+        -> elemsize  对应的 块大小
+        -> nelems    span块总数目
+
+
+---> mallocinit() 系统初始化代码
+
+---> 堆分配内存
+     调用 CALL runtime.newobject
+     -> func mallocgc  按照size<16byte  16<size<32K size>32K分配内存

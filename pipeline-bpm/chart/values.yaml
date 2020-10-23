@@ -1,0 +1,52 @@
+# This file created by chart-manager
+# Created at 2020-03-12 15:02:41.471240835 +0000 UTC m=+169.371367083    
+name: bam-server
+
+deployment:
+  imagePullSecret:
+    name: pipeline-harbor
+  restartPolicy: Always
+
+ingress:
+  enabled: "false"
+  hosts:
+    name: bam
+
+service:
+  port: "8088"
+  targetPort: "8088"
+  type: NodePort
+
+container:
+  env:
+    apollo:
+      bootstrap:
+        enabled: "true"
+        namespaces: applications
+      cluster: rpa
+      meta: ${apollo_meta:http://apollo.dev.yzf.net}
+    app:
+      id: SSO
+  image: harbor.yzf.best:1180/rpa/sso
+  imageTag: "5"
+  name: bam-server
+  port:
+    containerPort: "8088"
+    name: 8088tcp01
+    protocol: TCP
+
+filebeatSideCar:
+  image: harbor.yzf.best:1180/test/filebeat
+  imageTag: v1
+
+filebeat:
+  fields:
+    apptype: java
+    log_es_index: daizhang-set7-java
+    set: set7
+    module: daizhang.biz
+  output:
+    kafka:
+      hosts:
+        - "172.16.30.20:9092"
+      topic: "yzf_daizhang_set7"

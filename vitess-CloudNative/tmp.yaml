@@ -1,0 +1,787 @@
+# Source: vitess/templates/vitess.yaml
+###################################
+# ApplyVSchema job
+###################################
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: commerce-apply-vschema-initial
+spec:
+  backoffLimit: 1
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: apply-vschema
+          image: "harbor.yzf.best:1180/vitess/vtctlclient:helm-2.0.2-0"
+          volumeMounts:
+
+
+          command: ["bash"]
+          args:
+            - "-c"
+            - |
+              set -ex
+
+              VTCTLD_SVC=vtctld.vitess:15999
+              SECONDS=0
+              TIMEOUT_SECONDS=600
+              VTCTL_EXTRA_FLAGS=()
+
+              # poll every 5 seconds to see if keyspace is created
+              until vtctlclient ${VTCTL_EXTRA_FLAGS[@]} -server $VTCTLD_SVC GetKeyspace commerce > /dev/null 2>&1; do
+                if (( $SECONDS > $TIMEOUT_SECONDS )); then
+                  echo "timed out waiting for keyspace commerce to be ready"
+                  exit 1
+                fi
+                sleep 5
+              done
+
+              vtctlclient ${VTCTL_EXTRA_FLAGS[@]} -server $VTCTLD_SVC ApplyVSchema -vschema "$(cat <<END_OF_COMMAND
+                {
+                  "tables": {
+                    "product": {},
+                    "customer": {},
+                    "corder": {}
+                  }
+                }
+              END_OF_COMMAND
+              )" commerce
+      volumes:
+
+
+
+
+
+      # Shard initializations
+
+# define image to use
+---
+# Source: vitess/templates/vitess.yaml
+###################################
+# ApplySchema Job
+###################################
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: commerce-apply-schema-initial
+spec:
+  backoffLimit: 1
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: apply-schema
+          image: "harbor.yzf.best:1180/vitess/vtctlclient:helm-2.0.2-0"
+          volumeMounts:
+
+
+          command: ["bash"]
+          args:
+            - "-c"
+            - |
+              set -ex
+
+              VTCTLD_SVC=vtctld.vitess:15999
+              SECONDS=0
+              TIMEOUT_SECONDS=600
+              VTCTL_EXTRA_FLAGS=()
+
+              # poll every 5 seconds to see if vtctld is ready
+              until vtctlclient ${VTCTL_EXTRA_FLAGS[@]} -server $VTCTLD_SVC ListAllTablets zone1 > /dev/null 2>&1; do
+                if (( $SECONDS > $TIMEOUT_SECONDS )); then
+                  echo "timed out waiting for vtctlclient to be ready"
+                  exit 1
+                fi
+                sleep 5
+              done
+
+              while true; do
+                if (( $SECONDS > $TIMEOUT_SECONDS )); then
+                  echo "timed out waiting for master"
+                  exit 1
+                fi
+
+                # wait for all shards to have a master
+                master_alias=$(vtctlclient ${VTLCTL_EXTRA_FLAGS[@]} -server $VTCTLD_SVC GetShard commerce/0 | jq '.master_alias.uid')
+                if [ "$master_alias" == "null" -o "$master_alias" == "" ]; then
+                    echo "no master for 'commerce/0' yet, continuing to wait"
+                    sleep 5
+                    continue
+                fi
+
+                break
+              done
+
+              vtctlclient ${VTCTL_EXTRA_FLAGS[@]} -server $VTCTLD_SVC ApplySchema -sql "$(cat <<END_OF_COMMAND
+                create table product(
+                  sku varbinary(128),
+                  description varbinary(128),
+                  price bigint,
+                  primary key(sku)
+                );
+                create table customer(
+                  customer_id bigint not null auto_increment,
+                  email varbinary(128),
+                  primary key(customer_id)
+                );
+                create table corder(
+                  order_id bigint not null auto_increment,
+                  customer_id bigint,
+                  sku varbinary(128),
+                  price bigint,
+                  primary key(order_id)
+                );
+              END_OF_COMMAND
+              )" commerce
+      volumes:
+---
+# Source: vitess/templates/vitess.yaml
+###################################
+# InitShardMaster Job
+###################################
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: zone1-commerce-0-init-shard-master
+spec:
+  backoffLimit: 1
+  template:
+    metadata:
+      labels:
+        app: vitess
+        component: vttablet
+        cell: "zone1"
+        keyspace: "commerce"
+        shard: "0"
+        initShardMasterJob: "true"
+
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: init-shard-master
+          image: "harbor.yzf.best:1180/vitess/vtctlclient:helm-2.0.2-0"
+          volumeMounts:
+
+
+          command: ["bash"]
+          args:
+            - "-c"
+            - |
+              set -ex
+
+              VTCTLD_SVC=vtctld.vitess:15999
+              SECONDS=0
+              TIMEOUT_SECONDS=600
+              VTCTL_EXTRA_FLAGS=()
+
+              # poll every 5 seconds to see if vtctld is ready
+              until vtctlclient ${VTCTL_EXTRA_FLAGS[@]} -server $VTCTLD_SVC ListAllTablets zone1 > /dev/null 2>&1; do
+                if (( $SECONDS > $TIMEOUT_SECONDS )); then
+                  echo "timed out waiting for vtctlclient to be ready"
+                  exit 1
+                fi
+                sleep 5
+              done
+
+              until [ $TABLETS_READY ]; do
+                # get all the tablets in the current cell
+                cellTablets="$(vtctlclient ${VTCTL_EXTRA_FLAGS[@]} -server $VTCTLD_SVC ListAllTablets zone1)"
+
+                # filter to only the tablets in our current shard
+                shardTablets=$( echo "$cellTablets" | awk 'substr( $5,1,16 ) == "zone1-commerce-0" {print $0}')
+
+                # check for a master tablet from the ListAllTablets call
+                masterTablet=$( echo "$shardTablets" | awk '$4 == "master" {print $1}')
+                if [ $masterTablet ]; then
+                    echo "'$masterTablet' is already the master tablet, exiting without running InitShardMaster"
+                    exit
+                fi
+
+                # check for a master tablet from the GetShard call
+                master_alias=$(vtctlclient ${VTLCTL_EXTRA_FLAGS[@]} -server $VTCTLD_SVC GetShard commerce/0 | jq '.master_alias.uid')
+                if [ "$master_alias" != "null" -a "$master_alias" != "" ]; then
+                    echo "'$master_alias' is already the master tablet, exiting without running InitShardMaster"
+                    exit
+                fi
+
+                # count the number of newlines for the given shard to get the tablet count
+                tabletCount=$( echo "$shardTablets" | wc | awk '{print $1}')
+
+                # check to see if the tablet count equals the expected tablet count
+                if [ $tabletCount == 3 ]; then
+                  TABLETS_READY=true
+                else
+                  if (( $SECONDS > $TIMEOUT_SECONDS )); then
+                    echo "timed out waiting for tablets to be ready"
+                    exit 1
+                  fi
+
+                  # wait 5 seconds for vttablets to continue getting ready
+                  sleep 5
+                fi
+
+              done
+
+              # find the tablet id for the "-replica-0" stateful set for a given cell, keyspace and shard
+              tablet_id=$( echo "$shardTablets" | awk 'substr( $5,1,26 ) == "zone1-commerce-0-replica-0" {print $1}')
+
+              # initialize the shard master
+              until vtctlclient ${VTCTL_EXTRA_FLAGS[@]} -server $VTCTLD_SVC InitShardMaster -force commerce/0 $tablet_id; do
+                if (( $SECONDS > $TIMEOUT_SECONDS )); then
+                  echo "timed out waiting for InitShardMaster to succeed"
+                  exit 1
+                fi
+                sleep 5
+              done
+      volumes:
+
+
+
+
+
+
+  {
+    "type": "collection",
+    "links": {
+      "self": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads"
+    },
+    "createTypes": {
+      "workload": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads"
+    },
+    "actions": {},
+    "pagination": {
+      "limit": 10000,
+      "total": 3
+    },
+    "sort": {
+      "name": "name",
+      "order": "asc",
+      "reverse": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads?limit=-1\u0026order=desc\u0026sort=name",
+      "links": {
+        "uuid": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads?limit=-1\u0026sort=uuid"
+      }
+    },
+    "filters": {
+      "created": null,
+      "creatorId": null,
+      "name": null,
+      "namespaceId": null,
+      "removed": null,
+      "uuid": null
+    },
+    "resourceType": "workload",
+    "data": [{
+               "actionLinks": {
+                 "pause": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads/deployment:vitess:example-zone1-vtctld-1d4dcad0?action=pause",
+                 "resume": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads/deployment:vitess:example-zone1-vtctld-1d4dcad0?action=resume",
+                 "rollback": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads/deployment:vitess:example-zone1-vtctld-1d4dcad0?action=rollback"
+               },
+               "baseType": "workload",
+               "containers": [{
+                                "command": ["--cell=zone1", "--enable_queries=true", "--enable_realtime_stats=true", "--grpc_port=15999", "--logtostderr=true", "--port=15000", "--security_policy=read-only", "--service_map=grpc-vtctl", "--topo_global_root=/vitess/example/global", "--topo_global_server_address=example-etcd-faf13de3-client:2379", "--topo_implementation=etcd2", "--workflow_manager_init=true", "--workflow_manager_use_election=true"],
+                                "entrypoint": ["/vt/bin/vtctld"],
+                                "image": "harbor.yzf.best:1180/vitess/lite:v6.0.20-20200429",
+                                "imagePullPolicy": "IfNotPresent",
+                                "initContainer": false,
+                                "livenessProbe": {
+                                  "failureThreshold": 30,
+                                  "initialDelaySeconds": 300,
+                                  "path": "/debug/status",
+                                  "periodSeconds": 10,
+                                  "port": "web",
+                                  "scheme": "HTTP",
+                                  "successThreshold": 1,
+                                  "tcp": false,
+                                  "timeoutSeconds": 1,
+                                  "type": "/v3/project/schemas/probe"
+                                },
+                                "name": "vtctld",
+                                "ports": [{
+                                            "containerPort": 15000,
+                                            "kind": "ClusterIP",
+                                            "name": "web",
+                                            "protocol": "TCP",
+                                            "sourcePort": 0,
+                                            "type": "/v3/project/schemas/containerPort"
+                                          }, {
+                                            "containerPort": 15999,
+                                            "kind": "ClusterIP",
+                                            "name": "grpc",
+                                            "protocol": "TCP",
+                                            "sourcePort": 0,
+                                            "type": "/v3/project/schemas/containerPort"
+                                          }],
+                                "readinessProbe": {
+                                  "failureThreshold": 3,
+                                  "initialDelaySeconds": 0,
+                                  "path": "/debug/health",
+                                  "periodSeconds": 10,
+                                  "port": "web",
+                                  "scheme": "HTTP",
+                                  "successThreshold": 1,
+                                  "tcp": false,
+                                  "timeoutSeconds": 1,
+                                  "type": "/v3/project/schemas/probe"
+                                },
+                                "resources": {
+                                  "limits": {
+                                    "memory": "128Mi"
+                                  },
+                                  "requests": {
+                                    "cpu": "100m",
+                                    "memory": "128Mi"
+                                  },
+                                  "type": "/v3/project/schemas/resourceRequirements"
+                                },
+                                "restartCount": 0,
+                                "stdin": false,
+                                "stdinOnce": false,
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "tty": false,
+                                "type": "/v3/project/schemas/container",
+                                "uid": 999
+                              }],
+               "created": "2020-07-01T13:41:16Z",
+               "createdTS": 1593610876000,
+               "creatorId": null,
+               "deploymentConfig": {
+                 "maxSurge": "25%",
+                 "maxUnavailable": "25%",
+                 "minReadySeconds": 0,
+                 "progressDeadlineSeconds": 600,
+                 "revisionHistoryLimit": 0,
+                 "strategy": "RollingUpdate"
+               },
+               "deploymentStatus": {
+                 "availableReplicas": 1,
+                 "conditions": [{
+                                  "lastTransitionTime": "2020-07-01T13:41:51Z",
+                                  "lastTransitionTimeTS": 1593610911000,
+                                  "lastUpdateTime": "2020-07-01T13:41:51Z",
+                                  "lastUpdateTimeTS": 1593610911000,
+                                  "message": "Deployment has minimum availability.",
+                                  "reason": "MinimumReplicasAvailable",
+                                  "status": "True",
+                                  "type": "Available"
+                                }, {
+                                  "lastTransitionTime": "2020-07-01T13:41:16Z",
+                                  "lastTransitionTimeTS": 1593610876000,
+                                  "lastUpdateTime": "2020-07-01T13:41:51Z",
+                                  "lastUpdateTimeTS": 1593610911000,
+                                  "message": "ReplicaSet \"example-zone1-vtctld-1d4dcad0-659f84554\" has successfully progressed.",
+                                  "reason": "NewReplicaSetAvailable",
+                                  "status": "True",
+                                  "type": "Progressing"
+                                }],
+                 "observedGeneration": 1,
+                 "readyReplicas": 1,
+                 "replicas": 1,
+                 "type": "/v3/project/schemas/deploymentStatus",
+                 "unavailableReplicas": 0,
+                 "updatedReplicas": 1
+               },
+               "dnsPolicy": "ClusterFirst",
+               "hostIPC": false,
+               "hostNetwork": false,
+               "hostPID": false,
+               "id": "deployment:vitess:example-zone1-vtctld-1d4dcad0",
+               "labels": {
+                 "planetscale.com/cell": "zone1",
+                 "planetscale.com/cluster": "example",
+                 "planetscale.com/component": "vtctld"
+               },
+               "links": {
+                 "remove": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads/deployment:vitess:example-zone1-vtctld-1d4dcad0",
+                 "revisions": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads/deployment:vitess:example-zone1-vtctld-1d4dcad0/revisions",
+                 "self": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads/deployment:vitess:example-zone1-vtctld-1d4dcad0",
+                 "update": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads/deployment:vitess:example-zone1-vtctld-1d4dcad0",
+                 "yaml": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads/deployment:vitess:example-zone1-vtctld-1d4dcad0/yaml"
+               },
+               "name": "example-zone1-vtctld-1d4dcad0",
+               "namespaceId": "vitess",
+               "ownerReferences": [{
+                                     "apiVersion": "planetscale.com/v2",
+                                     "blockOwnerDeletion": true,
+                                     "controller": true,
+                                     "kind": "VitessCluster",
+                                     "name": "example",
+                                     "type": "/v3/project/schemas/ownerReference",
+                                     "uid": "963aad0e-bdb9-49bd-bb6e-896aa2a607b6"
+                                   }],
+               "paused": false,
+               "projectId": "local:p-zzb6n",
+               "restartPolicy": "Always",
+               "scale": 1,
+               "scheduling": {
+                 "priorityClassName": "vitess",
+                 "scheduler": "default-scheduler"
+               },
+               "selector": {
+                 "matchLabels": {
+                   "planetscale.com/cell": "zone1",
+                   "planetscale.com/cluster": "example",
+                   "planetscale.com/component": "vtctld"
+                 },
+                 "type": "/v3/project/schemas/labelSelector"
+               },
+               "state": "active",
+               "terminationGracePeriodSeconds": 30,
+               "transitioning": "no",
+               "transitioningMessage": "",
+               "type": "deployment",
+               "uuid": "eb38533f-a237-477d-a4d2-74ec2e1470e0",
+               "workloadAnnotations": {
+                 "deployment.kubernetes.io/revision": "1"
+               },
+               "workloadLabels": {
+                 "planetscale.com/cell": "zone1",
+                 "planetscale.com/cluster": "example",
+                 "planetscale.com/component": "vtctld"
+               }
+             },
+
+             {
+               "actionLinks": {
+                 "pause": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads/deployment:vitess:example-zone1-vtgate-bc6cde92?action=pause",
+                 "resume": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads/deployment:vitess:example-zone1-vtgate-bc6cde92?action=resume",
+                 "rollback": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads/deployment:vitess:example-zone1-vtgate-bc6cde92?action=rollback"
+               },
+               "annotations": {
+                 "planetscale.com/secret-hash": "9319d64374b4e7db093e081b18078661"
+               },
+               "baseType": "workload",
+               "containers": [{
+                                "command": ["--buffer_max_failover_duration=10s", "--buffer_min_time_between_failovers=20s", "--cell=zone1", "--cells_to_watch=zone1", "--enable_buffer=true", "--gateway_implementation=discoverygateway", "--grpc_max_message_size=67108864", "--grpc_port=15999", "--logtostderr=true", "--mysql_auth_server_impl=static", "--mysql_auth_server_static_file=/vt/secrets/vtgate-static-auth/users.json", "--mysql_server_port=3306", "--port=15000", "--service_map=grpc-vtgateservice", "--tablet_types_to_wait=MASTER,REPLICA", "--topo_global_root=/vitess/example/global", "--topo_global_server_address=example-etcd-faf13de3-client:2379", "--topo_implementation=etcd2"],
+                                "entrypoint": ["/vt/bin/vtgate"],
+                                "image": "harbor.yzf.best:1180/vitess/lite:v6.0.20-20200429",
+                                "imagePullPolicy": "IfNotPresent",
+                                "initContainer": false,
+                                "livenessProbe": {
+                                  "failureThreshold": 30,
+                                  "initialDelaySeconds": 300,
+                                  "path": "/debug/status",
+                                  "periodSeconds": 10,
+                                  "port": "web",
+                                  "scheme": "HTTP",
+                                  "successThreshold": 1,
+                                  "tcp": false,
+                                  "timeoutSeconds": 1,
+                                  "type": "/v3/project/schemas/probe"
+                                },
+                                "name": "vtgate",
+                                "ports": [{
+                                            "containerPort": 15000,
+                                            "kind": "ClusterIP",
+                                            "name": "web",
+                                            "protocol": "TCP",
+                                            "sourcePort": 0,
+                                            "type": "/v3/project/schemas/containerPort"
+                                          }, {
+                                            "containerPort": 15999,
+                                            "kind": "ClusterIP",
+                                            "name": "grpc",
+                                            "protocol": "TCP",
+                                            "sourcePort": 0,
+                                            "type": "/v3/project/schemas/containerPort"
+                                          }, {
+                                            "containerPort": 3306,
+                                            "kind": "ClusterIP",
+                                            "name": "mysql",
+                                            "protocol": "TCP",
+                                            "sourcePort": 0,
+                                            "type": "/v3/project/schemas/containerPort"
+                                          }],
+                                "readinessProbe": {
+                                  "failureThreshold": 3,
+                                  "initialDelaySeconds": 0,
+                                  "path": "/debug/health",
+                                  "periodSeconds": 10,
+                                  "port": "web",
+                                  "scheme": "HTTP",
+                                  "successThreshold": 1,
+                                  "tcp": false,
+                                  "timeoutSeconds": 1,
+                                  "type": "/v3/project/schemas/probe"
+                                },
+                                "resources": {
+                                  "limits": {
+                                    "memory": "256Mi"
+                                  },
+                                  "requests": {
+                                    "cpu": "100m",
+                                    "memory": "256Mi"
+                                  },
+                                  "type": "/v3/project/schemas/resourceRequirements"
+                                },
+                                "restartCount": 0,
+                                "stdin": false,
+                                "stdinOnce": false,
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "tty": false,
+                                "type": "/v3/project/schemas/container",
+                                "uid": 999,
+                                "volumeMounts": [{
+                                                   "mountPath": "/vt/secrets/vtgate-static-auth",
+                                                   "name": "vtgate-static-auth-secret",
+                                                   "readOnly": true,
+                                                   "type": "/v3/project/schemas/volumeMount"
+                                                 }]
+                              }],
+               "created": "2020-07-01T13:41:17Z",
+               "createdTS": 1593610877000,
+               "creatorId": null,
+               "deploymentConfig": {
+                 "maxSurge": "25%",
+                 "maxUnavailable": "25%",
+                 "minReadySeconds": 0,
+                 "progressDeadlineSeconds": 600,
+                 "revisionHistoryLimit": 0,
+                 "strategy": "RollingUpdate"
+               },
+               "deploymentStatus": {
+                 "availableReplicas": 1,
+                 "conditions": [{
+                                  "lastTransitionTime": "2020-07-01T13:41:54Z",
+                                  "lastTransitionTimeTS": 1593610914000,
+                                  "lastUpdateTime": "2020-07-01T13:41:54Z",
+                                  "lastUpdateTimeTS": 1593610914000,
+                                  "message": "Deployment has minimum availability.",
+                                  "reason": "MinimumReplicasAvailable",
+                                  "status": "True",
+                                  "type": "Available"
+                                }, {
+                                  "lastTransitionTime": "2020-07-01T13:41:17Z",
+                                  "lastTransitionTimeTS": 1593610877000,
+                                  "lastUpdateTime": "2020-07-02T10:25:18Z",
+                                  "lastUpdateTimeTS": 1593685518000,
+                                  "message": "ReplicaSet \"example-zone1-vtgate-bc6cde92-58d9b56bd5\" has successfully progressed.",
+                                  "reason": "NewReplicaSetAvailable",
+                                  "status": "True",
+                                  "type": "Progressing"
+                                }],
+                 "observedGeneration": 4,
+                 "readyReplicas": 1,
+                 "replicas": 1,
+                 "type": "/v3/project/schemas/deploymentStatus",
+                 "unavailableReplicas": 0,
+                 "updatedReplicas": 1
+               },
+               "dnsPolicy": "ClusterFirst",
+               "hostIPC": false,
+               "hostNetwork": false,
+               "hostPID": false,
+               "id": "deployment:vitess:example-zone1-vtgate-bc6cde92",
+               "labels": {
+                 "planetscale.com/cell": "zone1",
+                 "planetscale.com/cluster": "example",
+                 "planetscale.com/component": "vtgate"
+               },
+               "links": {
+                 "remove": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads/deployment:vitess:example-zone1-vtgate-bc6cde92",
+                 "revisions": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads/deployment:vitess:example-zone1-vtgate-bc6cde92/revisions",
+                 "self": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads/deployment:vitess:example-zone1-vtgate-bc6cde92",
+                 "update": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads/deployment:vitess:example-zone1-vtgate-bc6cde92",
+                 "yaml": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads/deployment:vitess:example-zone1-vtgate-bc6cde92/yaml"
+               },
+               "name": "example-zone1-vtgate-bc6cde92",
+               "namespaceId": "vitess",
+               "ownerReferences": [{
+                                     "apiVersion": "planetscale.com/v2",
+                                     "blockOwnerDeletion": true,
+                                     "controller": true,
+                                     "kind": "VitessCell",
+                                     "name": "example-zone1-5abb61ae",
+                                     "type": "/v3/project/schemas/ownerReference",
+                                     "uid": "e585794a-df0c-44a2-abed-8efb99f31c3f"
+                                   }],
+               "paused": false,
+               "projectId": "local:p-zzb6n",
+               "restartPolicy": "Always",
+               "scale": 1,
+               "scheduling": {
+                 "priorityClassName": "vitess",
+                 "scheduler": "default-scheduler"
+               },
+               "selector": {
+                 "matchLabels": {
+                   "planetscale.com/cell": "zone1",
+                   "planetscale.com/cluster": "example",
+                   "planetscale.com/component": "vtgate"
+                 },
+                 "type": "/v3/project/schemas/labelSelector"
+               },
+               "state": "active",
+               "terminationGracePeriodSeconds": 30,
+               "transitioning": "no",
+               "transitioningMessage": "",
+               "type": "deployment",
+               "uuid": "5418403f-9534-4fe2-a371-4d860de1d346",
+               "volumes": [{
+                             "name": "vtgate-static-auth-secret",
+                             "secret": {
+                               "defaultMode": 292,
+                               "items": [{
+                                           "key": "users.json",
+                                           "path": "users.json",
+                                           "type": "/v3/project/schemas/keyToPath"
+                                         }],
+                               "secretName": "example-cluster-config",
+                               "type": "/v3/project/schemas/secretVolumeSource"
+                             },
+                             "type": "/v3/project/schemas/volume"
+                           }],
+               "workloadAnnotations": {
+                 "deployment.kubernetes.io/revision": "4"
+               },
+               "workloadLabels": {
+                 "planetscale.com/cell": "zone1",
+                 "planetscale.com/cluster": "example",
+                 "planetscale.com/component": "vtgate"
+               }
+             },
+
+             {
+               "actionLinks": {
+                 "pause": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads/deployment:vitess:vitess-operator?action=pause",
+                 "resume": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads/deployment:vitess:vitess-operator?action=resume",
+                 "rollback": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads/deployment:vitess:vitess-operator?action=rollback"
+               },
+               "baseType": "workload",
+               "containers": [{
+                                "command": ["--logtostderr", "-v=4"],
+                                "entrypoint": ["vitess-operator"],
+                                "environment": {
+                                  "OPERATOR_NAME": "vitess-operator"
+                                },
+                                "environmentFrom": [{
+                                                      "optional": false,
+                                                      "source": "field",
+                                                      "sourceName": "metadata.namespace",
+                                                      "targetKey": "WATCH_NAMESPACE"
+                                                    }, {
+                                                      "optional": false,
+                                                      "source": "field",
+                                                      "sourceName": "metadata.name",
+                                                      "targetKey": "POD_NAME"
+                                                    }, {
+                                                      "optional": false,
+                                                      "source": "field",
+                                                      "sourceName": "metadata.namespace",
+                                                      "targetKey": "PS_OPERATOR_POD_NAMESPACE"
+                                                    }, {
+                                                      "optional": false,
+                                                      "source": "field",
+                                                      "sourceName": "metadata.name",
+                                                      "targetKey": "PS_OPERATOR_POD_NAME"
+                                                    }],
+                                "image": "harbor.yzf.best:1180/vitess/vitess-operator:v2.0.0",
+                                "imagePullPolicy": "IfNotPresent",
+                                "initContainer": false,
+                                "name": "vitess-operator",
+                                "ports": null,
+                                "resources": {
+                                  "limits": {
+                                    "memory": "128Mi"
+                                  },
+                                  "requests": {
+                                    "cpu": "100m",
+                                    "memory": "128Mi"
+                                  },
+                                  "type": "/v3/project/schemas/resourceRequirements"
+                                },
+                                "restartCount": 0,
+                                "stdin": false,
+                                "stdinOnce": false,
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "tty": false,
+                                "type": "/v3/project/schemas/container"
+                              }],
+               "created": "2020-06-29T02:50:15Z",
+               "createdTS": 1593399015000,
+               "creatorId": null,
+               "deploymentConfig": {
+                 "maxSurge": "25%",
+                 "maxUnavailable": "25%",
+                 "minReadySeconds": 0,
+                 "progressDeadlineSeconds": 600,
+                 "revisionHistoryLimit": 10,
+                 "strategy": "RollingUpdate"
+               },
+               "deploymentStatus": {
+                 "availableReplicas": 1,
+                 "conditions": [{
+                                  "lastTransitionTime": "2020-06-29T02:50:25Z",
+                                  "lastTransitionTimeTS": 1593399025000,
+                                  "lastUpdateTime": "2020-06-29T02:50:25Z",
+                                  "lastUpdateTimeTS": 1593399025000,
+                                  "message": "Deployment has minimum availability.",
+                                  "reason": "MinimumReplicasAvailable",
+                                  "status": "True",
+                                  "type": "Available"
+                                }, {
+                                  "lastTransitionTime": "2020-06-29T02:50:15Z",
+                                  "lastTransitionTimeTS": 1593399015000,
+                                  "lastUpdateTime": "2020-06-29T02:50:25Z",
+                                  "lastUpdateTimeTS": 1593399025000,
+                                  "message": "ReplicaSet \"vitess-operator-9c644d456\" has successfully progressed.",
+                                  "reason": "NewReplicaSetAvailable",
+                                  "status": "True",
+                                  "type": "Progressing"
+                                }],
+                 "observedGeneration": 1,
+                 "readyReplicas": 1,
+                 "replicas": 1,
+                 "type": "/v3/project/schemas/deploymentStatus",
+                 "unavailableReplicas": 0,
+                 "updatedReplicas": 1
+               },
+               "dnsPolicy": "ClusterFirst",
+               "hostIPC": false,
+               "hostNetwork": false,
+               "hostPID": false,
+               "id": "deployment:vitess:vitess-operator",
+               "labels": {
+                 "app": "vitess-operator"
+               },
+               "links": {
+                 "remove": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads/deployment:vitess:vitess-operator",
+                 "revisions": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads/deployment:vitess:vitess-operator/revisions",
+                 "self": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads/deployment:vitess:vitess-operator",
+                 "update": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads/deployment:vitess:vitess-operator",
+                 "yaml": "https://srv1.yzf.best/v3/project/local:p-zzb6n/workloads/deployment:vitess:vitess-operator/yaml"
+               },
+               "name": "vitess-operator",
+               "namespaceId": "vitess",
+               "paused": false,
+               "projectId": "local:p-zzb6n",
+               "restartPolicy": "Always",
+               "scale": 1,
+               "scheduling": {
+                 "priorityClassName": "vitess-operator-control-plane",
+                 "scheduler": "default-scheduler"
+               },
+               "selector": {
+                 "matchLabels": {
+                   "app": "vitess-operator"
+                 },
+                 "type": "/v3/project/schemas/labelSelector"
+               },
+               "serviceAccountName": "vitess-operator",
+               "state": "active",
+               "terminationGracePeriodSeconds": 30,
+               "transitioning": "no",
+               "transitioningMessage": "",
+               "type": "deployment",
+               "uuid": "1fab2237-1fb0-40cf-a756-3cc439244e08",
+               "workloadAnnotations": {
+                 "deployment.kubernetes.io/revision": "1",
+                 "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"vitess-operator\",\"namespace\":\"vitess\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"vitess-operator\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"vitess-operator\"}},\"spec\":{\"containers\":[{\"args\":[\"--logtostderr\",\"-v=4\"],\"command\":[\"vitess-operator\"],\"env\":[{\"name\":\"WATCH_NAMESPACE\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"metadata.namespace\"}}},{\"name\":\"POD_NAME\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"metadata.name\"}}},{\"name\":\"PS_OPERATOR_POD_NAMESPACE\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"metadata.namespace\"}}},{\"name\":\"PS_OPERATOR_POD_NAME\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"metadata.name\"}}},{\"name\":\"OPERATOR_NAME\",\"value\":\"vitess-operator\"}],\"image\":\"harbor.yzf.best:1180/vitess/vitess-operator:v2.0.0\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"vitess-operator\",\"resources\":{\"limits\":{\"memory\":\"128Mi\"},\"requests\":{\"cpu\":\"100m\",\"memory\":\"128Mi\"}}}],\"priorityClassName\":\"vitess-operator-control-plane\",\"serviceAccountName\":\"vitess-operator\"}}}}\n"
+               }
+             }
+
+    ]
+  }

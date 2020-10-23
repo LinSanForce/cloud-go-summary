@@ -1,0 +1,83 @@
+categories:
+- BAM
+- SSO
+questions:
+- variable: container.env.apollo.bootstrap.enabled
+  default: "true"
+  description: "true"
+  type: string
+  required: true
+  label: apollo.bootstrap.enabled
+  group: "Apollo Bootstrap"
+- variable: container.env.apollo.bootstrap.namespaces
+  default: "application"
+  description: "application"
+  type: string
+  required: true
+  label: apollo.bootstrap.namespaces
+  group: "Apollo Bootstrap"
+- variable: container.env.apollo.cluster
+  default: "${apollo_cluster:default}"
+  description: "${apollo_cluster:default}"
+  type: string
+  required: true
+  label: apollo cluster
+  group: "Apollo"
+- variable: container.env.apollo.meta
+  default: "${apollo_meta:http://apollo.dev.yzf.net}"
+  description: "${apollo_meta:http://apollo.dev.yzf.net}"
+  type: string
+  required: true
+  label: apollo.meta
+  group: "Apollo"
+- variable: container.env.app.id
+  default: "BAM"
+  description: "bam"
+  type: string
+  required: true
+  label: app.id
+  group: "Others"
+
+
+- variable: filebeat.fields.apptype
+  default: "java"
+  description: "fields.apptype"
+  type: string
+  required: true
+  label: fields.apptype
+  group: "Filebeat"
+- variable: filebeat.fields.log_es_index
+  default: "sso-set7-java"
+  description: "fields.log_es_index"
+  type: string
+  required: true
+  label: fields.log_es_index
+  group: "Filebeat"
+- variable: filebeat.fields.set
+  default: "set7"
+  description: "fields.set"
+  type: string
+  required: true
+  label: fields.set
+  group: "Filebeat"
+- variable: filebeat.fields.module
+  default: "sso.biz"
+  description: "fields.module"
+  type: string
+  required: true
+  label: fields.module
+  group: "Filebeat"
+- variable: filebeat.output.kafka.hosts
+  default: "{\"172.16.30.20:9092\"}"
+  description: "output.kafka.hosts"
+  type: string
+  required: true
+  label: output.kafka.hosts
+  group: "Filebeat"
+- variable: filebeat.output.kafka.topic
+  default: "yzf_sso_set7"
+  description: "output.kafka.topic"
+  type: string
+  required: true
+  label: output.kafka.topic
+  group: "Filebeat"

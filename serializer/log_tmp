@@ -1,0 +1,480 @@
+
+-------  provisioner.go -> create方法, 创建集群
+                                      provisioner.go 314: Provision to create cluster [c-kcjql]
+2020-04-23 15:13:22.030 [INFO][28254] provisioner.go 330: pending cluster [c-kcjql]
+2020-04-23 15:13:22.030 [INFO][28254] provisioner.go 652: cluster [c-kcjql] driver is []
+2020-04-23 15:13:22.030 [INFO][28254] provisioner.go 354: validating cluster driver.....
+2020-04-23 15:13:22.030 [INFO][28254] provisioner.go 359: validating cluster driver..... new driver: rancherKubernetesEngine
+2020-04-23 15:13:22.030 [INFO][28254] provisioner.go 368: cluster status  driver [] is not same as new driver [rancherKubernetesEngine]
+2020-04-23 15:13:22.030 [INFO][28254] provisioner.go 374: update cluster to new status.....
+2020-04-23 15:13:22.034 [INFO][28254] provisioner.go 336: begin to provision cluster.....
+
+        provisioner.go -> provision方法
+2020-04-23 15:13:22.035 [INFO][28254] provisioner.go 342: update cluster in provision do logic.....
+
+        provisioner   update方法
+2020-04-23 15:13:22.035 [INFO][28254] provisioner.go 290: updating cluster [c-kcjql], is create? [true]
+
+        provisioner -> reconcileCluster方法
+2020-04-23 15:13:22.036 [INFO][28254] provisioner.go 404: reconcile cluster [c-kcjql], is create [true]
+        provisioner -> skipProvisioning 方法
+2020-04-23 15:13:22.036 [INFO][28254] provisioner.go 652: cluster [c-kcjql] driver is [rancherKubernetesEngine]
+
+        provisioner -> reconcileCluster方法
+2020-04-23 15:13:22.036 [INFO][28254] provisioner.go 451: set generic configs.....
+        reconcileCluster - getSpec - getConfig
+2020-04-23 15:13:22.037 [INFO][28254] provisioner.go 673: reconcile rke nodes.....
+        reconcileRKENodes   这个方法应该在 同步RKE节点
+2020-04-23 15:13:22.037 [INFO][28254] provisioner.go 833: listing node of cluster [c-kcjql]
+
+
+---------------------------------------------------------------------------------------------------------
+    provisioner.go 的create方法, 经过追踪，将路径描绘出来如下:
+
+    1, zz_generated_cluster_lifecycle_adapter.go:
+    2, 注意, object.go中的是 “公共方法”
+       norman/lifecycle/object.go: NewObjectLifecycleAdapter 构造objectLifecycleAdapter适配器,
+       返回sync方法,
+    3, norman/lifecycle/object.go sync方法:
+       64行 func (o *objectLifecycleAdapter) create方法 -> 关注219行 o.record(obj, o.lifecycle.Create)
+    4, 这里的 o.lifecycle.Create 对应zz_generated_cluster_lifecycle_adapter.go: 29行 func(w *clusterLifecycleAdapter) Create
+    5, 上述方法通过调用 w.lifecycle.Create(obj.(*Cluster)) -> provisioner.go:  create方法
+
+    看一下从初始化注册过程如何引申到　"同步"
+    1, 从 zz_generated_cluster_controller.go: 这里初始化了NewClusterLifecycleAdapter, 并且注册 handler到控制循环中
+    2, func (s *clusterClient) AddLifecycle　此方法创建　"集群生命周期同步函数",
+            s.Controller()创建自定义控制器,
+            Controller.AddHandler进行方法绑定.
+
+       AddLifecycle, AddFeatureLifecycle, AddClusterScopedLifecycle, AddClusterScopedFeatureLifecycle 做了同样的事
+
+
+    3, generic_controller.go: func (g *genericController) AddHandler 方法, 将handler函数绑定到genericController对象的handlers处理切片
+    4,  那么这些handle是如何不断在控制循环中进行同步的：
+        (1) func (g *genericController) Start
+            func (g *genericController) run(ctx context.Context, threadiness int)
+            go wait.Until(g.runWorker, time.Second, ctx.Done())
+        (2)控制循环如下:
+           func (g *genericController) runWorker() {
+           	for g.processNextWorkItem() {
+           	}
+           }
+        (3)追一下 初始生成的 controller对象 的逻辑,
+        func (g *genericController) processNextWorkItem() -> 284行 err := g.syncHandler(key)方法
+        (4)  func (g *genericController) syncHandler 函数, 将会遍历 genericController対象的 handlers进行处理。
+
+
+    追一下初始化注册 以及创建自定义控制器 的流程:
+    app.go 130行,新启动的go 协程,managementController.Register(ctx, management, scaledContext.ClientGetter.(*clustermanager.Manager))
+        一共有3个与生命周期相关控制器被创建， 并且通过AddHandle函数绑定了同步方法
+        1,usercontrollers.RegisterEarly： cluster-agent-controller-cleanup
+        2,clusterprovisioner.Register：   cluster-provisioner-controller
+        3,auth.RegisterLate(ctx, management)
+          这里面又包括 "mgmt-project-rbac-remove", "mgmt-cluster-rbac-remove", "mgmt-tenant-rbac-remove"
+
+        以上3个都会 调用zz_generated_cluster_controller.go 中的 AddLifecycle方法
+
+
+
+
+    新一轮循环, provisioner.go -> create方法.
+2020-04-23 15:13:22.054 [INFO][28254] provisioner.go 314: Provision to create cluster [c-kcjql]
+2020-04-23 15:13:22.054 [INFO][28254] provisioner.go 330: pending cluster [c-kcjql]
+2020-04-23 15:13:22.054 [INFO][28254] provisioner.go 652: cluster [c-kcjql] driver is [rancherKubernetesEngine]
+2020-04-23 15:13:22.054 [INFO][28254] provisioner.go 354: validating cluster driver.....
+2020-04-23 15:13:22.054 [INFO][28254] provisioner.go 359: validating cluster driver..... new driver: rancherKubernetesEngine
+2020-04-23 15:13:22.054 [INFO][28254] provisioner.go 336: begin to provision cluster.....
+2020-04-23 15:13:22.054 [INFO][28254] provisioner.go 342: update cluster in provision do logic.....
+2020-04-23 15:13:22.054 [INFO][28254] provisioner.go 290: updating cluster [c-kcjql], is create? [true]
+2020-04-23 15:13:22.054 [INFO][28254] provisioner.go 404: reconcile cluster [c-kcjql], is create [true]
+2020-04-23 15:13:22.054 [INFO][28254] provisioner.go 652: cluster [c-kcjql] driver is [rancherKubernetesEngine]
+
+2020-04-23 15:13:22.054 [INFO][28254] provisioner.go 451: set generic configs.....
+2020-04-23 15:13:22.054 [INFO][28254] provisioner.go 673: reconcile rke nodes.....
+2020-04-23 15:13:22.054 [INFO][28254] provisioner.go 833: listing node of cluster [c-kcjql]
+---------------------------------------------------------------------------------------------------------------
+
+
+2020-04-23 15:13:22.060 [INFO][28254] provisioner.go 314: Provision to create cluster [c-kcjql]
+2020-04-23 15:13:22.060 [INFO][28254] provisioner.go 330: pending cluster [c-kcjql]
+2020-04-23 15:13:22.060 [INFO][28254] provisioner.go 652: cluster [c-kcjql] driver is [rancherKubernetesEngine]
+2020-04-23 15:13:22.060 [INFO][28254] provisioner.go 354: validating cluster driver.....
+2020-04-23 15:13:22.060 [INFO][28254] provisioner.go 359: validating cluster driver..... new driver: rancherKubernetesEngine
+2020-04-23 15:13:22.060 [INFO][28254] provisioner.go 336: begin to provision cluster.....
+2020-04-23 15:13:22.060 [INFO][28254] provisioner.go 342: update cluster in provision do logic.....
+2020-04-23 15:13:22.060 [INFO][28254] provisioner.go 290: updating cluster [c-kcjql], is create? [true]
+2020-04-23 15:13:22.060 [INFO][28254] provisioner.go 404: reconcile cluster [c-kcjql], is create [true]
+2020-04-23 15:13:22.060 [INFO][28254] provisioner.go 652: cluster [c-kcjql] driver is [rancherKubernetesEngine]
+
+2020-04-23 15:13:22.060 [INFO][28254] provisioner.go 451: set generic configs.....
+2020-04-23 15:13:22.060 [INFO][28254] provisioner.go 673: reconcile rke nodes.....
+2020-04-23 15:13:22.060 [INFO][28254] provisioner.go 833: listing node of cluster [c-kcjql]
+---------------------------------------------------------------------------------------------------------------
+
+
+2020-04-23 15:13:22.066 [INFO][28254] provisioner.go 314: Provision to create cluster [c-kcjql]
+2020-04-23 15:13:22.067 [INFO][28254] provisioner.go 330: pending cluster [c-kcjql]
+2020-04-23 15:13:22.067 [INFO][28254] provisioner.go 652: cluster [c-kcjql] driver is [rancherKubernetesEngine]
+2020-04-23 15:13:22.067 [INFO][28254] provisioner.go 354: validating cluster driver.....
+2020-04-23 15:13:22.067 [INFO][28254] provisioner.go 359: validating cluster driver..... new driver: rancherKubernetesEngine
+2020-04-23 15:13:22.067 [INFO][28254] provisioner.go 336: begin to provision cluster.....
+2020-04-23 15:13:22.067 [INFO][28254] provisioner.go 342: update cluster in provision do logic.....
+2020-04-23 15:13:22.067 [INFO][28254] provisioner.go 290: updating cluster [c-kcjql], is create? [true]
+2020-04-23 15:13:22.067 [INFO][28254] provisioner.go 404: reconcile cluster [c-kcjql], is create [true]
+2020-04-23 15:13:22.067 [INFO][28254] provisioner.go 652: cluster [c-kcjql] driver is [rancherKubernetesEngine]
+
+2020-04-23 15:13:22.067 [INFO][28254] provisioner.go 451: set generic configs.....
+2020-04-23 15:13:22.067 [INFO][28254] provisioner.go 673: reconcile rke nodes.....
+2020-04-23 15:13:22.067 [INFO][28254] provisioner.go 833: listing node of cluster [c-kcjql]
+---------------------------------------------------------------------------------------------------------------
+
+
+2020-04-23 15:13:22.091 [INFO][28254] provisioner.go 314: Provision to create cluster [c-kcjql]
+2020-04-23 15:13:22.091 [INFO][28254] provisioner.go 330: pending cluster [c-kcjql]
+2020-04-23 15:13:22.091 [INFO][28254] provisioner.go 652: cluster [c-kcjql] driver is [rancherKubernetesEngine]
+2020-04-23 15:13:22.091 [INFO][28254] provisioner.go 354: validating cluster driver.....
+2020-04-23 15:13:22.091 [INFO][28254] provisioner.go 359: validating cluster driver..... new driver: rancherKubernetesEngine
+2020-04-23 15:13:22.091 [INFO][28254] provisioner.go 336: begin to provision cluster.....
+2020-04-23 15:13:22.091 [INFO][28254] provisioner.go 342: update cluster in provision do logic.....
+2020-04-23 15:13:22.091 [INFO][28254] provisioner.go 290: updating cluster [c-kcjql], is create? [true]
+2020-04-23 15:13:22.091 [INFO][28254] provisioner.go 404: reconcile cluster [c-kcjql], is create [true]
+2020-04-23 15:13:22.091 [INFO][28254] provisioner.go 652: cluster [c-kcjql] driver is [rancherKubernetesEngine]
+
+
+2020-04-23 15:13:22.091 [INFO][28254] provisioner.go 451: set generic configs.....
+2020-04-23 15:13:22.091 [INFO][28254] provisioner.go 673: reconcile rke nodes.....
+2020-04-23 15:13:22.091 [INFO][28254] provisioner.go 833: listing node of cluster [c-kcjql]
+---------------------------------------------------------------------------------------------------------------
+
+
+2020-04-23 15:13:22.094 [INFO][28254] provisioner.go 314: Provision to create cluster [c-kcjql]
+2020-04-23 15:13:22.094 [INFO][28254] provisioner.go 330: pending cluster [c-kcjql]
+2020-04-23 15:13:22.094 [INFO][28254] provisioner.go 652: cluster [c-kcjql] driver is [rancherKubernetesEngine]
+2020-04-23 15:13:22.094 [INFO][28254] provisioner.go 354: validating cluster driver.....
+2020-04-23 15:13:22.094 [INFO][28254] provisioner.go 359: validating cluster driver..... new driver: rancherKubernetesEngine
+2020-04-23 15:13:22.094 [INFO][28254] provisioner.go 336: begin to provision cluster.....
+2020-04-23 15:13:22.094 [INFO][28254] provisioner.go 342: update cluster in provision do logic.....
+2020-04-23 15:13:22.094 [INFO][28254] provisioner.go 290: updating cluster [c-kcjql], is create? [true]
+2020-04-23 15:13:22.094 [INFO][28254] provisioner.go 404: reconcile cluster [c-kcjql], is create [true]
+2020-04-23 15:13:22.094 [INFO][28254] provisioner.go 652: cluster [c-kcjql] driver is [rancherKubernetesEngine]
+
+2020-04-23 15:13:22.094 [INFO][28254] provisioner.go 451: set generic configs.....
+2020-04-23 15:13:22.094 [INFO][28254] provisioner.go 673: reconcile rke nodes.....
+2020-04-23 15:13:22.094 [INFO][28254] provisioner.go 833: listing node of cluster [c-kcjql]
+---------------------------------------------------------------------------------------------------------------
+
+
+2020-04-23 15:13:22.428 [INFO][28254] provisioner.go 314: Provision to create cluster [c-kcjql]
+2020-04-23 15:13:22.428 [INFO][28254] provisioner.go 330: pending cluster [c-kcjql]
+2020-04-23 15:13:22.428 [INFO][28254] provisioner.go 652: cluster [c-kcjql] driver is [rancherKubernetesEngine]
+2020-04-23 15:13:22.428 [INFO][28254] provisioner.go 354: validating cluster driver.....
+2020-04-23 15:13:22.428 [INFO][28254] provisioner.go 359: validating cluster driver..... new driver: rancherKubernetesEngine
+2020-04-23 15:13:22.428 [INFO][28254] provisioner.go 336: begin to provision cluster.....
+2020-04-23 15:13:22.428 [INFO][28254] provisioner.go 342: update cluster in provision do logic.....
+2020-04-23 15:13:22.428 [INFO][28254] provisioner.go 290: updating cluster [c-kcjql], is create? [true]
+2020-04-23 15:13:22.428 [INFO][28254] provisioner.go 404: reconcile cluster [c-kcjql], is create [true]
+2020-04-23 15:13:22.428 [INFO][28254] provisioner.go 652: cluster [c-kcjql] driver is [rancherKubernetesEngine]
+
+2020-04-23 15:13:22.428 [INFO][28254] provisioner.go 451: set generic configs.....
+2020-04-23 15:13:22.429 [INFO][28254] provisioner.go 673: reconcile rke nodes.....
+2020-04-23 15:13:22.429 [INFO][28254] provisioner.go 833: listing node of cluster [c-kcjql]
+---------------------------------------------------------------------------------------------------------------
+
+
+          追踪这里的逻辑:  Node生命周期的控制循环
+          1, object.go:  func NewObjectLifecycleAdapter 方法
+                         64行调用o.create(obj) 是以上 "集群创建控制循环" 的逻辑
+
+                         object.go 包含了通用的控制器逻辑, 集群以及节点的生命周期创建都是走这一步
+
+          2, func (o *objectLifecycleAdapter) sync 方法中,
+             调用 o.record(obj, o.lifecycle.Updated), 将o.lifecycle.Updated 融入 sync函数
+             此场景 接口update方法对应 zz_generated_node_lifecycle_adapter.go中
+                func (w *nodeLifecycleAdapter) Updated 方法
+                   -> w.lifecycle.Updated(obj.(*Node))
+
+          3, controller.go:
+             func (m *Lifecycle) Updated(obj *v3.Node) 方法
+                 -> obj, err := m.ready(obj) 進入以下日誌輸出
+
+     // 创建新的 节点配置文件
+2020-04-23 15:13:22.872 [INFO][28254] controller.go 446: build new node config.....
+2020-04-23 15:13:22.872 [INFO][28254] controller.go 453: restore node config from file.....
+2020-04-23 15:13:22.873 [INFO][28254] controller.go 458: load node driver config.....
+     // NodeConfig対象 , cm[], key="driverConfig"就是 模板配置
+2020-04-23 15:13:22.873 [INFO][28254] controller.go 463: load node driver config.....
+            {
+                "boot2dockerUrl":"http://file.yzf.best/software/rancheros.iso",
+                "cpuCount":"2","diskSize":"20000","hostDnsResolver":false,"hostonlyCidr":"192.168.99.1/24",
+                "hostonlyNicpromisc":"deny","hostonlyNictype":"82540EM","hostonlyNoDhcp":false,
+                "importBoot2dockerVm":"","memory":"2048","natNictype":"82540EM","noDnsProxy":false,
+                "noShare":false,"noVtxCheck":true,"shareFolder":"","uiType":"headless"
+            }
+     // 开启一个协程进行 节点新建操作, master1以及　node1
+2020-04-23 15:13:22.873 [INFO][28254] controller.go 469: provision node in async routine.....
+     func (m *Lifecycle) provision
+     // 在 local/management-state/node/nodes/node1 读取资源
+2020-04-23 15:13:22.873 [INFO][28254] controller.go 271: provisioning node in dir
+                                           local/management-state/node/nodes/node1
+2020-04-23 15:13:22.873 [INFO][28254] controller.go 278: update the node info .....
+
+
+---------------------------------------------------------------------
+    func (m *Lifecycle) ready(obj *v3.Node)方法
+2020-04-23 15:13:22.873 [INFO][28254] controller.go 446: build new node config.....
+2020-04-23 15:13:22.873 [INFO][28254] controller.go 453: restore node config from file.....
+2020-04-23 15:13:22.873 [INFO][28254] controller.go 458: load node driver config.....
+2020-04-23 15:13:22.873 [INFO][28254] controller.go 463: load node driver config.....
+               {
+               "boot2dockerUrl":"http://file.yzf.best/software/rancheros.iso","cpuCount":"2","diskSize":"20000",
+               "hostDnsResolver":false,"hostonlyCidr":"192.168.99.1/24","hostonlyNicpromisc":"deny",
+               "hostonlyNictype":"82540EM","hostonlyNoDhcp":false,"importBoot2dockerVm":"","memory":"2048",
+               "natNictype":"82540EM","noDnsProxy":false,"noShare":false,"noVtxCheck":true,"shareFolder":"",
+               "uiType":"headless"
+               }
+2020-04-23 15:13:22.873 [INFO][28254] controller.go 469: provision node in async routine.....
+           // 这里是 master节点的创建
+2020-04-23 15:13:22.873 [INFO][28254] controller.go 271: provisioning node in dir
+                                           local/management-state/node/nodes/master1
+2020-04-23 15:13:22.873 [INFO][28254] controller.go 278: update the node info .....
+2020-04-23 15:13:22.881 [INFO][28254] controller.go 289: building create node command.....
+　　　　　　　// 以下就是　将主机模板参数组装成　创建节点脚本, +++创建node
+           //  代码中是　createCommandsArgs数组
+      // 而后调用　utils.go: func buildCommand(nodeDir string, node *v3.Node, cmdArgs []string)方法
+            返回CMD对象，
+            在调用此 cmd对象的 Start()，异步启动命令, 这里启动的是docker-machine Linux命令
+            cmd.Wait() 完成执行,
+2020-04-23 15:13:22.881 [INFO][28254] controller.go 291: create command args:
+                   create  -d  virtualbox  --engine-install-url  https://releases.rancher.com/install-docker/19.03.sh
+                      --engine-label  engine01=engine-pan
+                      --virtualbox-boot2docker-url  http://file.yzf.best/software/rancheros.iso
+                      --virtualbox-memory  2048  --virtualbox-ui-type  headless
+                      --virtualbox-hostonly-cidr  192.168.99.1/24  --virtualbox-no-vtx-check
+                      --virtualbox-cpu-count  2  --virtualbox-disk-size  20000  --virtualbox-hostonly-nicpromisc  deny
+                      --virtualbox-hostonly-nictype  82540EM  --virtualbox-nat-nictype  82540EM  node1
+2020-04-23 15:13:22.881 [INFO][28254] controller.go 297: Provisioning node node1
+2020-04-23 15:13:22.881 [INFO][28254] controller.go 289: building create node command.....
+　　　　　　　// +++创建master
+2020-04-23 15:13:22.881 [INFO][28254] controller.go 291: create command args:
+　　　　　　　　　　　　create  -d  virtualbox  --engine-install-url  https://releases.rancher.com/install-docker/19.03.sh
+　　　　　　　　　　　　　　--engine-label  engine01=engine-pan  --virtualbox-cpu-count  2  --virtualbox-disk-size  20000
+　　　　　　　　　　　　　　--virtualbox-no-vtx-check  --virtualbox-hostonly-nicpromisc  deny  --virtualbox-memory  2048
+　　　　　　　　　　　　　　--virtualbox-hostonly-nictype  82540EM  --virtualbox-ui-type  headless
+　　　　　　　　　　　　　　--virtualbox-boot2docker-url  http://file.yzf.best/software/rancheros.iso
+　　　　　　　　　　　　　　--virtualbox-hostonly-cidr  192.168.99.1/24  --virtualbox-nat-nictype  82540EM  master1
+2020-04-23 15:13:22.881 [INFO][28254] controller.go 297: Provisioning node master1
+
+           // controller.go: m.reportStatus(stdoutReader, stderrReader, obj) 方法,  读取cmd命令执行的输出流
+                             -> utils.go  reportStatus函数
+2020-04-23 15:13:22.940 [INFO][28254] utils.go 205: [node-controller-docker-machine]
+                Creating CA: local/management-state/node/nodes/master1/certs/ca.pem
+2020-04-23 15:13:22.940 [INFO][28254] utils.go 205: [node-controller-docker-machine]
+                Creating CA: local/management-state/node/nodes/node1/certs/ca.pem
+2020-04-23 15:13:23.014 [INFO][28254] utils.go 205: [node-controller-docker-machine]
+                Creating client certificate: local/management-state/node/nodes/master1/certs/cert.pem
+2020-04-23 15:13:23.139 [INFO][28254] utils.go 205: [node-controller-docker-machine]
+                Running pre-create checks...
+2020-04-23 15:13:23.177 [INFO][28254] utils.go 205: [node-controller-docker-machine]
+                (master1) Image cache directory does not exist, creating it at
+                local/management-state/node/nodes/master1/cache...
+2020-04-23 15:13:23.231 [INFO][28254] utils.go 205: [node-controller-docker-machine] Creating machine...
+2020-04-23 15:13:23.233 [INFO][28254] utils.go 205: [node-controller-docker-machine]
+                Perform create by calling driver create...
+2020-04-23 15:13:23.249 [INFO][28254] utils.go 205: [node-controller-docker-machine]
+                (master1) Downloading local/management-state/node/nodes/master1/cache/boot2docker.iso
+                          from http://file.yzf.best/software/rancheros.iso...
+2020-04-23 15:13:23.280 [INFO][28254] utils.go 205: [node-controller-docker-machine]
+                Creating client certificate: local/management-state/node/nodes/node1/certs/cert.pem
+
+
+
+--------------------------- 以下依然是创建集群的控制循环  ---------------------------------
+2020-04-23 15:13:23.334 [INFO][28254] provisioner.go 314: Provision to create cluster [c-kcjql]
+2020-04-23 15:13:23.334 [INFO][28254] provisioner.go 330: pending cluster [c-kcjql]
+2020-04-23 15:13:23.334 [INFO][28254] provisioner.go 652: cluster [c-kcjql] driver is [rancherKubernetesEngine]
+2020-04-23 15:13:23.334 [INFO][28254] provisioner.go 354: validating cluster driver.....
+2020-04-23 15:13:23.334 [INFO][28254] provisioner.go 359: validating cluster driver..... new driver: rancherKubernetesEngine
+2020-04-23 15:13:23.334 [INFO][28254] provisioner.go 336: begin to provision cluster.....
+2020-04-23 15:13:23.334 [INFO][28254] provisioner.go 342: update cluster in provision do logic.....
+2020-04-23 15:13:23.334 [INFO][28254] provisioner.go 290: updating cluster [c-kcjql], is create? [true]
+2020-04-23 15:13:23.334 [INFO][28254] provisioner.go 404: reconcile cluster [c-kcjql], is create [true]
+2020-04-23 15:13:23.334 [INFO][28254] provisioner.go 652: cluster [c-kcjql] driver is [rancherKubernetesEngine]
+2020-04-23 15:13:23.334 [INFO][28254] provisioner.go 451: set generic configs.....
+2020-04-23 15:13:23.334 [INFO][28254] provisioner.go 673: reconcile rke nodes.....
+2020-04-23 15:13:23.334 [INFO][28254] provisioner.go 833: listing node of cluster [c-kcjql]
+2020-04-23 15:13:23.335 [INFO][28254] provisioner.go 314: Provision to create cluster [c-kcjql]
+2020-04-23 15:13:23.335 [INFO][28254] provisioner.go 330: pending cluster [c-kcjql]
+2020-04-23 15:13:23.335 [INFO][28254] provisioner.go 652: cluster [c-kcjql] driver is [rancherKubernetesEngine]
+2020-04-23 15:13:23.335 [INFO][28254] provisioner.go 354: validating cluster driver.....
+2020-04-23 15:13:23.335 [INFO][28254] provisioner.go 359: validating cluster driver..... new driver: rancherKubernetesEngine
+2020-04-23 15:13:23.335 [INFO][28254] provisioner.go 336: begin to provision cluster.....
+2020-04-23 15:13:23.335 [INFO][28254] provisioner.go 342: update cluster in provision do logic.....
+2020-04-23 15:13:23.335 [INFO][28254] provisioner.go 290: updating cluster [c-kcjql], is create? [true]
+2020-04-23 15:13:23.335 [INFO][28254] provisioner.go 404: reconcile cluster [c-kcjql], is create [true]
+2020-04-23 15:13:23.335 [INFO][28254] provisioner.go 652: cluster [c-kcjql] driver is [rancherKubernetesEngine]
+2020-04-23 15:13:23.335 [INFO][28254] provisioner.go 451: set generic configs.....
+2020-04-23 15:13:23.335 [INFO][28254] provisioner.go 673: reconcile rke nodes.....
+2020-04-23 15:13:23.335 [INFO][28254] provisioner.go 833: listing node of cluster [c-kcjql]
+-------------------------------------------------------------------------------------------------------
+
+
+2020-04-23 15:14:46.707 [INFO][28254] utils.go 205: [node-controller-docker-machine] Save machine info...
+2020-04-23 15:14:46.712 [INFO][28254] utils.go 205: [node-controller-docker-machine]
+                    Waiting for machine to be running, this may take a few minutes...
+2020-04-23 15:14:46.798 [INFO][28254] utils.go 205: [node-controller-docker-machine]
+                    Detecting operating system of created instance...
+2020-04-23 15:14:46.801 [INFO][28254] utils.go 205: [node-controller-docker-machine] Waiting for SSH to be available...
+2020-04-23 15:14:46.916 [INFO][28254] utils.go 205: [node-controller-docker-machine] Detecting the provisioner...
+2020-04-23 15:14:47.053 [INFO][28254] utils.go 205: [node-controller-docker-machine] Provisioning with rancheros...
+
+2020-04-23 15:14:48.554168 I | mvcc: store.index: compact 787840
+2020-04-23 15:14:48.702514 I | mvcc: finished scheduled compaction at 787840 (took 147.425708ms)
+2020-04-23 15:15:10.582308 W | etcdserver: read-only range request "key:\"/registry/services/endpoints/kube-system/kube-scheduler\" " with result "range_response_count:1 size:535" took too long (356.512074ms) to execute
+2020-04-23 15:15:10.582381 W | etcdserver: read-only range request "key:\"/registry/services/endpoints/default/kubernetes\" " with result "range_response_count:1 size:361" took too long (574.733042ms) to execute
+
+2020-04-23 15:15:15.258 [INFO][28254] utils.go 205: [node-controller-docker-machine]
+                    Copying certs to the local machine directory...
+2020-04-23 15:15:16.875 [INFO][28254] utils.go 205: [node-controller-docker-machine]
+                    Copying certs to the remote machine...
+2020-04-23 15:15:17.619 [INFO][28254] utils.go 205: [node-controller-docker-machine]
+                    Setting Docker configuration on the remote daemon...
+2020-04-23 15:15:17.624 [INFO][28254] utils.go 205: [node-controller-docker-machine] docker options: &{
+2020-04-23 15:15:17.628 [INFO][28254] utils.go 205: [node-controller-docker-machine] DOCKER_OPTS='
+2020-04-23 15:15:17.634 [INFO][28254] utils.go 205: [node-controller-docker-machine] -H tcp://0.0.0.0:2376
+2020-04-23 15:15:17.639 [INFO][28254] utils.go 205: [node-controller-docker-machine] -H unix:///var/run/docker.sock
+2020-04-23 15:15:17.644 [INFO][28254] utils.go 205: [node-controller-docker-machine] --storage-driver overlay2
+2020-04-23 15:15:17.648 [INFO][28254] utils.go 205: [node-controller-docker-machine] --tlsverify
+2020-04-23 15:15:17.654 [INFO][28254] utils.go 205: [node-controller-docker-machine] --tlscacert /var/lib/rancher/conf/ca.pem
+2020-04-23 15:15:17.659 [INFO][28254] utils.go 205: [node-controller-docker-machine] --tlscert /var/lib/rancher/conf/server.pem
+2020-04-23 15:15:17.663 [INFO][28254] utils.go 205: [node-controller-docker-machine] --tlskey /var/lib/rancher/conf/server-key.pem
+2020-04-23 15:15:17.666 [INFO][28254] utils.go 205: [node-controller-docker-machine] --label engine01=engine-pan
+2020-04-23 15:15:17.672 [INFO][28254] utils.go 205: [node-controller-docker-machine] --label provider=virtualbox
+2020-04-23 15:15:17.675 [INFO][28254] utils.go 205: [node-controller-docker-machine]
+2020-04-23 15:15:17.682 [INFO][28254] utils.go 205: [node-controller-docker-machine] '
+2020-04-23 15:15:17.686 [INFO][28254] utils.go 205: [node-controller-docker-machine]
+2020-04-23 15:15:17.688 [INFO][28254] utils.go 205: [node-controller-docker-machine]  /var/lib/rancher/conf/docker}
+2020-04-23 15:15:17.762 [INFO][28254] utils.go 205: [node-controller-docker-machine] Start docker service...
+2020-04-23 15:15:21.172 [INFO][28254] utils.go 205: [node-controller-docker-machine] Checking connection to Docker...
+2020-04-23 15:15:21.406 [INFO][28254] utils.go 205: [node-controller-docker-machine] Docker is up and running!
+2020-04-23 15:15:21.409 [INFO][28254] utils.go 219: read standard output over, begin to read error output
+2020-04-23 15:15:21.409 [INFO][28254] utils.go 226: read output data end.
+
+            // 等待 docker-machine执行完成
+2020-04-23 15:15:21.409 [INFO][28254] controller.go 312: Waiting for docker-machine result...
+            // 在 master1节点部署 rancher-agent, 调用controller.go的deployAgent方法
+2020-04-23 15:15:21.410 [INFO][28254] controller.go 327: deploy agent to target host master1 .....
+2020-04-23 15:15:21.410 [INFO][28254] controller.go 423: get or create system cluster token of cluster [c-kcjql].....
+2020-04-23 15:15:21.415 [INFO][28254] controller.go 429: build agent command.....
+            // ssh 免密登录到master1
+2020-04-23 15:15:21.415 [INFO][28254] controller.go 432:
+             agent command args: --native-ssh  ssh  master1  sudo  docker  run  -d  --privileged
+                  --restart=unless-stopped  --net=host  -v  /etc/kubernetes:/etc/kubernetes
+                  -v  /var/run:/var/run  harbor.yzf.best:1180/rancher/rancher-agent:v2.3
+                  --server  https://127.0.0.1:8443  --token  jb66nn2dk8fx8tkkckf9c8qgwrtsjrcbmg9mgq5p2fmzsqth5j5654  --ca-checksum  3eda99ba3d3d971b40cedac3e61485a94fb4f4b6c7f07d74717160ddef18a51a  -r  -n  m-2d7nd
+                    ？？？？  --server  https://127.0.0.1:8443 ERROR
+2020-04-23 15:15:21.415 [INFO][28254] controller.go 437: run command to deploy agent.....
+              ------> 到这里返回controller.go的 provision方法,  这是 controller.go: ready方法 引用的协程
+
+
+        // 这里已经完成了 controller.go:provision方法, 此处返回的是 err=http https 冲突, 通知通道关闭, 跳出定时器
+2020-04-23 15:15:21.650 [INFO][28254] controller.go 488: provision node success, then save node config.....
+        //  controller.go: saveConfig方法
+2020-04-23 15:15:21.650 [INFO][28254] controller.go 528: Generating and uploading node config master1
+2020-04-23 15:15:21.657 [INFO][28254] controller.go 537: node ip is 192.168.99.100
+2020-04-23 15:15:21.658 [INFO][28254] controller.go 543: node internal ip is 192.168.99.100
+2020-04-23 15:15:21.666 [ERROR][28254] generic_controller.go 290:
+            NodeController c-kcjql/m-2d7nd [node-controller] failed with : Unable to find image
+            'harbor.yzf.best:1180/rancher/rancher-agent:v2.3' locally
+            docker: Error response from daemon: Get https://harbor.yzf.best:1180/v2/: http: server gave HTTP response to HTTPS client.
+            See 'docker run --help'.
+            Process exited with status 125
+            : exit status 1
+
+            // 这里打印出的错误信息
+            logrus.Errorf("%v %v %v", g.name, key, err)
+
+
+----------------------------------------------------------------------------------------------------------
+2020-04-23 15:15:21.666 [INFO][28254] controller.go 446: build new node config.....
+2020-04-23 15:15:21.666 [INFO][28254] controller.go 453: restore node config from file.....
+2020-04-23 15:15:21.668 [INFO][28254] controller.go 458: load node driver config.....
+2020-04-23 15:15:21.668 [INFO][28254] controller.go 463: load node driver config.....
+                {
+                 "boot2dockerUrl":"http://file.yzf.best/software/rancheros.iso","cpuCount":"2",
+                 "diskSize":"20000","hostDnsResolver":false,"hostonlyCidr":"192.168.99.1/24",
+                 "hostonlyNicpromisc":"deny","hostonlyNictype":"82540EM","hostonlyNoDhcp":false,
+                 "importBoot2dockerVm":"","memory":"2048","natNictype":"82540EM","noDnsProxy":false,
+                 "noShare":false,"noVtxCheck":true,"shareFolder":"","uiType":"headless"
+                 }
+2020-04-23 15:15:21.668 [INFO][28254] controller.go 469: provision node in async routine.....
+2020-04-23 15:15:21.668 [INFO][28254] controller.go 271: provisioning node in dir local/management-state/node/nodes/master1
+2020-04-23 15:15:21.668 [INFO][28254] controller.go 278: update the node info .....
+2020-04-23 15:15:21.670 [INFO][28254] controller.go 488: provision node success, then save node config.....
+2020-04-23 15:15:21.670 [INFO][28254] controller.go 528: Generating and uploading node config
+2020-04-23 15:15:21.678 [INFO][28254] controller.go 537: node ip is 192.168.99.100
+2020-04-23 15:15:21.679 [INFO][28254] controller.go 543: node internal ip is 192.168.99.100
+2020-04-23 15:15:22.167 [INFO][28254] provisioner.go 314: Provision to create cluster [c-kcjql]
+2020-04-23 15:15:22.167 [INFO][28254] provisioner.go 330: pending cluster [c-kcjql]
+2020-04-23 15:15:22.167 [INFO][28254] provisioner.go 652: cluster [c-kcjql] driver is [rancherKubernetesEngine]
+2020-04-23 15:15:22.167 [INFO][28254] provisioner.go 354: validating cluster driver.....
+2020-04-23 15:15:22.167 [INFO][28254] provisioner.go 359: validating cluster driver..... new driver: rancherKubernetesEngine
+2020-04-23 15:15:22.167 [INFO][28254] provisioner.go 336: begin to provision cluster.....
+2020-04-23 15:15:22.167 [INFO][28254] provisioner.go 342: update cluster in provision do logic.....
+2020-04-23 15:15:22.167 [INFO][28254] provisioner.go 290: updating cluster [c-kcjql], is create? [true]
+2020-04-23 15:15:22.167 [INFO][28254] provisioner.go 404: reconcile cluster [c-kcjql], is create [true]
+2020-04-23 15:15:22.167 [INFO][28254] provisioner.go 652: cluster [c-kcjql] driver is [rancherKubernetesEngine]
+2020-04-23 15:15:22.167 [INFO][28254] provisioner.go 451: set generic configs.....
+2020-04-23 15:15:22.167 [INFO][28254] provisioner.go 673: reconcile rke nodes.....
+2020-04-23 15:15:22.167 [INFO][28254] provisioner.go 833: listing node of cluster [c-kcjql]
+2020-04-23 15:15:37.183 [INFO][28254] provisioner.go 314: Provision to create cluster [c-kcjql]
+2020-04-23 15:15:37.183 [INFO][28254] provisioner.go 330: pending cluster [c-kcjql]
+2020-04-23 15:15:37.183 [INFO][28254] provisioner.go 652: cluster [c-kcjql] driver is [rancherKubernetesEngine]
+2020-04-23 15:15:37.183 [INFO][28254] provisioner.go 354: validating cluster driver.....
+2020-04-23 15:15:37.184 [INFO][28254] provisioner.go 359: validating cluster driver..... new driver: rancherKubernetesEngine
+2020-04-23 15:15:37.184 [INFO][28254] provisioner.go 336: begin to provision cluster.....
+2020-04-23 15:15:37.184 [INFO][28254] provisioner.go 342: update cluster in provision do logic.....
+2020-04-23 15:15:37.184 [INFO][28254] provisioner.go 290: updating cluster [c-kcjql], is create? [true]
+2020-04-23 15:15:37.184 [INFO][28254] provisioner.go 404: reconcile cluster [c-kcjql], is create [true]
+2020-04-23 15:15:37.184 [INFO][28254] provisioner.go 652: cluster [c-kcjql] driver is [rancherKubernetesEngine]
+2020-04-23 15:15:37.184 [INFO][28254] provisioner.go 451: set generic configs.....
+2020-04-23 15:15:37.184 [INFO][28254] provisioner.go 673: reconcile rke nodes.....
+2020-04-23 15:15:37.184 [INFO][28254] provisioner.go 833: listing node of cluster [c-kcjql]
+2020-04-23 15:15:38.184 [INFO][28254] provisioner.go 314: Provision to create cluster [c-kcjql]
+2020-04-23 15:15:38.184 [INFO][28254] provisioner.go 330: pending cluster [c-kcjql]
+2020-04-23 15:15:38.184 [INFO][28254] provisioner.go 652: cluster [c-kcjql] driver is [rancherKubernetesEngine]
+2020-04-23 15:15:38.184 [INFO][28254] provisioner.go 354: validating cluster driver.....
+2020-04-23 15:15:38.184 [INFO][28254] provisioner.go 359: validating cluster driver..... new driver: rancherKubernetesEngine
+2020-04-23 15:15:38.184 [INFO][28254] provisioner.go 336: begin to provision cluster.....
+2020-04-23 15:15:38.184 [INFO][28254] provisioner.go 342: update cluster in provision do logic.....
+2020-04-23 15:15:38.184 [INFO][28254] provisioner.go 290: updating cluster [c-kcjql], is create? [true]
+2020-04-23 15:15:38.184 [INFO][28254] provisioner.go 404: reconcile cluster [c-kcjql], is create [true]
+2020-04-23 15:15:38.184 [INFO][28254] provisioner.go 652: cluster [c-kcjql] driver is [rancherKubernetesEngine]
+2020-04-23 15:15:38.184 [INFO][28254] provisioner.go 451: set generic configs.....
+2020-04-23 15:15:38.184 [INFO][28254] provisioner.go 673: reconcile rke nodes.....
+2020-04-23 15:15:38.184 [INFO][28254] provisioner.go 833: listing node of cluster [c-kcjql]
+
+
+
+
+[ERROR][18428] log.go 31: cluster [c-ddnt9] provisioning: Failed to set up SSH tunneling
+                            for host [192.168.99.116]: Can't establish dialer connection:
+                            can not build dialer to [c-ddnt9:m-ngwqv]
+2020-04-23 16:18:59.656 [ERROR][18428] log.go 31: cluster [c-ddnt9] provisioning: Removing host [192.168.99.116] from node lists
+2020-04-23 16:18:59.666 [ERROR][18428] log.go 31: cluster [c-ddnt9] provisioning: Cluster must have at least one etcd plane host: failed to connect to the following etcd host(s) [192.168.99.116]
+2020-04-23 16:18:59.700 [ERROR][18428] generic_controller.go 290:
+                ClusterController c-ddnt9 [cluster-provisioner-controller] failed with :
+                Cluster must have at least one etcd plane host:
+ failed to connect to the following etcd host(s) [192.168.99.116]
+2020-04-23 16:18:59.701 [INFO][18428] provisioner.go 314: Provision to create cluster [c-ddnt9]
+
+
+2020-04-23 17:17:42.704 [ERROR][18428] generic_controller.go 290:
+            NodeController c-ddnt9/m-ngwqv [node-controller] failed with :
+            nodes.management.cattle.io "m-ngwqv" not found
+2020-04-23 17:17:42.719 [INFO][18428] utils.go 288: [node-controller-docker-machine] Successfully removed node1
+2020-04-23 17:17:42.720 [INFO][18428] controller.go 261: Removing node node1 done
+2020-04-23 17:17:42.840 [ERROR][18428] generic_controller.go 290:
+           NodeController c-ddnt9/m-rrwcf [node-controller] failed with : nodes.management.cattle.io "m-rrwcf" not found
+
+
+修改Dockerfile，设置JAVA_OPT参数

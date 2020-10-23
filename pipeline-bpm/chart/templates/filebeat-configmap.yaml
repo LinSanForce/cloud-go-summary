@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: filebeat-conf
+data:
+  filebeat.yml: |-
+    filebeat:
+      prospectors:
+        - document_type: "log"
+          paths:
+            - /data/*/logs/*.log
+          exclude_files: ['20.*.log$']
+          fields:
+            apptype: {{ .Values.filebeat.fields.apptype }}
+            log_es_index: {{ .Values.filebeat.fields.log_es_index }}
+            set: {{ .Values.filebeat.fields.set }}
+            module: {{ .Values.filebeat.fields.module }}
+          multiline:
+              pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}'
+              negate: true
+              match: after
+              encoding: utf-8
+          scan_frequency: 30s
+    output.kafka:
+      enabled: true
+      hosts:
+{{- range .Values.filebeat.output.kafka.hosts }}
+        - {{ . }}
+{{- end}}
+
+      topic: {{ .Values.filebeat.output.kafka.topic }}
+    #hosts: ["172.16.30.20:9092"]
+    shipper:
+      tags: ["type"]
+    logging:
+      to_syslog: false
+      to_files: true
+      files:
+        path: /var/log/filebeat
+        name: filebeat.log
+        keepfiles: 7
+      level: info

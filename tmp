@@ -1,0 +1,13 @@
+.PHONY: premake Compiling release precompiling
+
+premake:
+     echo "premake"
+
+precompiling: premake
+         echo "precompiling"
+
+Compiling: precompiling
+         echo "Compiling"
+
+release: Compiling
+         echo "release"
